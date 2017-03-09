@@ -3,6 +3,83 @@
   
   
     
+    <entry>
+      <title><![CDATA[I am back]]></title>
+      <url>http://yoursite.com/2017/03/09/I-am-back/</url>
+      <content type="html"><![CDATA[<p>其实第一次接触hexo博客也有一段时间了，但是没有坚持下去，偶然发现github上面的主页需要翻墙才能访问了。上次重装系统，文件又没有备份，因此干脆重新搭建了个人技术博客，这次主要部署在coding.net和github上。后续会将之前的文章再找回来，本篇主要记录hexo博客中md文件的格式。</p>
+<h3 id="新建文章"><a href="#新建文章" class="headerlink" title="新建文章"></a>新建文章</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new &quot;new article&quot;</div></pre></td></tr></table></figure>
+<h3 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h3><table>
+<thead>
+<tr>
+<th>Setting</th>
+<th style="text-align:center">Description</th>
+<th style="text-align:center">Default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>layout</td>
+<td style="text-align:center">Layout</td>
+<td style="text-align:center">post或page</td>
+</tr>
+<tr>
+<td>title</td>
+<td style="text-align:center">文章的标题</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>date</td>
+<td style="text-align:center">创建日期</td>
+<td style="text-align:center">文件的创建日期</td>
+</tr>
+<tr>
+<td>updated</td>
+<td style="text-align:center">修改日期</td>
+<td style="text-align:center">文件的修改日期</td>
+</tr>
+<tr>
+<td>comments</td>
+<td style="text-align:center">是否开启评论</td>
+<td style="text-align:center">true</td>
+</tr>
+<tr>
+<td>tags</td>
+<td style="text-align:center">标签</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>categories</td>
+<td style="text-align:center">分类</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td>permalink</td>
+<td style="text-align:center">url中的名字</td>
+<td style="text-align:center">文件名</td>
+</tr>
+</tbody>
+</table>
+<p>建议添加keywords和description 有利于搜索引擎搜索。</p>
+<h3 id="分类和标签"><a href="#分类和标签" class="headerlink" title="分类和标签"></a>分类和标签</h3><p>例如：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">categories:</div><div class="line">- 日记</div><div class="line">tags:</div><div class="line">- Hexo</div><div class="line">- node.js</div></pre></td></tr></table></figure></p>
+]]></content>
+      
+        <categories>
+            
+            <category> other </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> hexo </tag>
+            
+            <tag> other </tag>
+            
+        </tags>
+        
+    </entry>
+    
   
   
 </search>
