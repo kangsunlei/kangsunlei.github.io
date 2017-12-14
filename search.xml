@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[safari 禁止视频自动播放的错误捕捉]]></title>
+    <url>%2F2017%2F12%2F14%2Fsafari-%E7%A6%81%E6%AD%A2%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E7%9A%84%E9%94%99%E8%AF%AF%E6%8D%95%E6%8D%89%2F</url>
+    <content type="text"><![CDATA[最近做页面的时候要加一个自动播放的视频作为背景。很理所当然的我写了如下的代码： 1&lt;video autoplay loop src="..."&gt;&lt;/video&gt; autoplay 表示自动播放。在ie8以上的浏览器都是可以的，但是在Safari 11 中却出现了报错。Unhandled Promise Rejection: NotAllowedError (DOM Exception 35): The request is not allowed by the user agent or the platform in the current context, possibly because the user denied permission. 我本来想用try...catch捕捉这个错误，结果捉不到。 在github上找到了一个解决方法： 12345678910var promise = document.querySelector('video').play();if (promise !== undefined) &#123; promise.catch(error =&gt; &#123; // Auto-play was prevented // Show a UI element to let the user manually start playback &#125;).then(() =&gt; &#123; // Auto-play started &#125;);&#125;]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[再一次折腾hexo博客]]></title>
     <url>%2F2017%2F12%2F10%2F%E5%86%8D%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BEhexo%E5%8D%9A%E5%AE%A2%2F</url>
     <content type="text"><![CDATA[再一次折腾hexo博客，主要是升级脚手架和next主题。升级的过程中发现 next的local_search不能用了，控制台也没有js的报错，于是我看到有一条对search.xml的请求。直接打开xml页面在浏览器中显示了问题的原因 “Input is not proper UTF-8, indicate encoding !” 找到对应的行数之后，把对应的字符重新敲了一遍就好了。]]></content>
@@ -167,8 +178,8 @@
         <category>读书笔记</category>
       </categories>
       <tags>
-        <tag>css</tag>
         <tag>读书笔记</tag>
+        <tag>css</tag>
       </tags>
   </entry>
   <entry>
