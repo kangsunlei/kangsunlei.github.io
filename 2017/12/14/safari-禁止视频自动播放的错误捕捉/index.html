@@ -387,7 +387,7 @@
 
       
         <p>最近做页面的时候要加一个自动播放的视频作为背景。很理所当然的我写了如下的代码：</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;video autoplay loop src=<span class="string">"..."</span>&gt;&lt;/video&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;video autoplay loop src=<span class="string">"..."</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">video</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 <p><code>autoplay</code> 表示自动播放。<br>在ie8以上的浏览器都是可以的，但是在Safari 11 中却出现了报错。<br><div class="note danger"><p>Unhandled Promise Rejection: NotAllowedError (DOM Exception 35): The request is not allowed by the user agent or the platform in the current context, possibly because the user denied permission. </p></div></p>
 <p>我本来想用<code>try...catch</code>捕捉这个错误，结果捉不到。</p>
 <p>在github上找到了一个解决方法：</p>
