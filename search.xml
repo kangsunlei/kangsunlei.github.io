@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[移动端网页命令行工具]]></title>
+    <url>%2F2018%2F03%2F03%2F%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%BD%91%E9%A1%B5%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%2F</url>
+    <content type="text"><![CDATA[1、vconsole腾讯出品，看log比较方便。git 地址: https://github.com/Tencent/vConsole使用方式： 123456789&lt;script src="path/to/vconsole.min.js"&gt;&lt;/script&gt;&lt;script&gt; // init vConsole var vConsole = new VConsole(); console.log('Hello world');&lt;/script&gt;import VConsole from 'vconsole';var vConsole = new VConsole(); 2、eruda功能很全的consolegit 地址：https://github.com/liriliri/eruda 使用方式： 12&lt;script src="//cdn.jsdelivr.net/npm/eruda"&gt;&lt;/script&gt;&lt;script&gt;eruda.init();&lt;/script&gt;]]></content>
+      <tags>
+        <tag>前端</tag>
+        <tag>工具</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Mac 无法安装 node-sass 的解决方案]]></title>
+    <url>%2F2018%2F03%2F03%2FMac-%E6%97%A0%E6%B3%95%E5%AE%89%E8%A3%85-node-sass-%E7%9A%84%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%2F</url>
+    <content type="text"><![CDATA[node-sass 需要编译，要安装 Command Line Tools。Command Line Tools是在Xcode中的一款工具，可以在命令行中运行C程序。在命令行执行下面的代码，再重新安装 node-sass 即可。 1xcode-select --install]]></content>
+      <tags>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[safari 禁止视频自动播放的错误捕捉]]></title>
     <url>%2F2017%2F12%2F14%2Fsafari-%E7%A6%81%E6%AD%A2%E8%A7%86%E9%A2%91%E8%87%AA%E5%8A%A8%E6%92%AD%E6%94%BE%E7%9A%84%E9%94%99%E8%AF%AF%E6%8D%95%E6%8D%89%2F</url>
     <content type="text"><![CDATA[最近做页面的时候要加一个自动播放的视频作为背景。很理所当然的我写了如下的代码： 1&lt;video autoplay loop src="..."&gt;&lt;/video&gt; autoplay 表示自动播放。在ie8以上的浏览器都是可以的，但是在Safari 11 中却出现了报错。Unhandled Promise Rejection: NotAllowedError (DOM Exception 35): The request is not allowed by the user agent or the platform in the current context, possibly because the user denied permission. 我本来想用try...catch捕捉这个错误，结果捉不到。 在github上找到了一个解决方法： 12345678910var promise = document.querySelector('video').play();if (promise !== undefined) &#123; promise.catch(error =&gt; &#123; // Auto-play was prevented // Show a UI element to let the user manually start playback &#125;).then(() =&gt; &#123; // Auto-play started &#125;);&#125;]]></content>
@@ -228,18 +245,6 @@
       <tags>
         <tag>JavaScript</tag>
         <tag>算法</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[牛客网刷题笔记]]></title>
-    <url>%2F2017%2F03%2F19%2F%E7%89%9B%E5%AE%A2%E7%BD%91%E5%88%B7%E9%A2%98%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[牛客网刷题笔记 在html中，帧元素（frameset）的优先级最高，表单元素比非表单元素的优先级要高。表单元素包括：文本输入框，密码输入框，单选框，复选框，文本输入域，列表框等等；非表单元素包括：连接（a），div,table,span等。所有的html元素又可以根据其显示分成两类：有窗口元素以及无窗口元素。有窗口元素总是显示在无窗口元素的前面。有窗口元素包括：select元素，object元素，以及frames元素等等。无窗口元素：大部分html元素都是无窗口元素。 js内置对象– Arguments– Array– Boolean– Date– Error– Function– Math– Number– Object– RegExp– String]]></content>
-      <categories>
-        <category>笔记</category>
-      </categories>
-      <tags>
-        <tag>笔记</tag>
-        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
