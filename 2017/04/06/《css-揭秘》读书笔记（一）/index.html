@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="css,读书笔记," />
+  <meta name="keywords" content="读书笔记,css," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="记录阅读《css 揭秘》一书中遇到的问题。 开始行内元素的padding和margin：可见，行内元素的padding在任何方向上都是有效的，而margin只有在左右有效。但是有一个问题就是，看起来span的高度被撑高了，但是却越界了了。设置line-height可以改变这种现象，或者直接设置display为inline-block。可以看到我在span标签的样式中定义了vertical-alig">
-<meta name="keywords" content="css,读书笔记">
+<meta name="keywords" content="读书笔记,css">
 <meta property="og:type" content="article">
 <meta property="og:title" content="《css 揭秘》读书笔记（一）">
 <meta property="og:url" content="http://conwey.coding.me/2017/04/06/《css-揭秘》读书笔记（一）/index.html">
@@ -137,7 +137,8 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?4a278bbd710510437c0b9ec632e86937";
+      var baidu_analytics  = theme.baidu_analytics[location.host]
+      hm.src = "https://hm.baidu.com/hm.js?";
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -565,9 +566,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/css/" rel="tag"># css</a>
-          
             <a href="/tags/读书笔记/" rel="tag"># 读书笔记</a>
+          
+            <a href="/tags/css/" rel="tag"># css</a>
           
         </div>
       
