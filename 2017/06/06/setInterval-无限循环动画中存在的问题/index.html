@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="JavaScript,笔记," />
+  <meta name="keywords" content="笔记,JavaScript," />
 
 
 
@@ -80,7 +80,7 @@
 
 
 <meta name="description" content="最近在做公司的官网，首页用到了一些循环播放的动画，类似于轮播图。之前一般是直接套用插件，不常手动自己做这种，但是为了避免引入第三方库导致网页过于臃肿，所以就凭着自己掌握的 setTimeout 和  setInterval 的一些简单的知识就开始了制作。 要求：五个 div 依次切换。间隔3s">
-<meta name="keywords" content="JavaScript,笔记">
+<meta name="keywords" content="笔记,JavaScript">
 <meta property="og:type" content="article">
 <meta property="og:title" content="setInterval 无限循环动画中存在的问题">
 <meta property="og:url" content="http://conwey.coding.me/2017/06/06/setInterval-无限循环动画中存在的问题/index.html">
@@ -137,7 +137,9 @@
     var _hmt = _hmt || [];
     (function() {
       var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?undefined";
+      var host = location.host;
+      var code = {"kangsunlei.github.io":"4a278bbd710510437c0b9ec632e86937","conwey.coding.me":"0767291691de4506cc8587fa9f8c9fcd"};
+      hm.src = "https://hm.baidu.com/hm.js?" + code[host];
       var s = document.getElementsByTagName("script")[0];
       s.parentNode.insertBefore(hm, s);
     })();
@@ -485,9 +487,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
-          
             <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
           
         </div>
       
