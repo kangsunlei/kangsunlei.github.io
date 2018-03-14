@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[nodejs搭建简易文件服务器]]></title>
     <url>%2F2018%2F03%2F14%2Fnodejs%E6%90%AD%E5%BB%BA%E7%AE%80%E6%98%93%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%2F</url>
-    <content type="text"><![CDATA[1234567891011121314151617181920212223242526272829303132333435363738394041424344454647const http = require('http');var url = require("url");var fs = require("fs");const server = http.createServer((req, res) =&gt; &#123; var reqPath = url.parse(req.url).path; var filepath = __dirname + '/files' + reqPath; fs.exists(filepath, function (exists) &#123; if (exists) &#123; fs.stat(filepath, function (err, stats) &#123; if (err) &#123; res.writeHead(500, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;server error&lt;/div&gt;'); &#125; else &#123; if (stats.isFile()) &#123; var file = fs.createReadStream(filepath); res.writeHead(200, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); file.pipe(res); &#125; else &#123; fs.readdir(filepath, function (err, files) &#123; var str = '&lt;ul&gt;'; for (var i in files) &#123; str += `&lt;li&gt;&lt;a href="$&#123;reqPath&#125;$&#123;files[i]&#125;/"&gt;$&#123;files[i]&#125;&lt;/a&gt;&lt;/li&gt;` &#125; str += '&lt;/ul&gt;' res.writeHead(200, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.write(str); &#125;); &#125; &#125; &#125;); &#125; else &#123; res.writeHead(404, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;404 not found&lt;/div&gt;'); &#125; &#125;);&#125;);server.listen(8000);]]></content>
+    <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748const http = require('http');var url = require("url");var fs = require("fs");const server = http.createServer((req, res) =&gt; &#123; var reqPath = url.parse(req.url).path; var filepath = __dirname + '/files' + reqPath; fs.exists(filepath, function (exists) &#123; if (exists) &#123; fs.stat(filepath, function (err, stats) &#123; if (err) &#123; res.writeHead(500, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;server error&lt;/div&gt;'); &#125; else &#123; if (stats.isFile()) &#123; var file = fs.createReadStream(filepath); res.writeHead(200, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); file.pipe(res); &#125; else &#123; fs.readdir(filepath, function (err, files) &#123; var str = '&lt;ul&gt;'; for (var i in files) &#123; // 这边url拼接要注意一下 str += `&lt;li&gt;&lt;a href="$&#123;reqPath.replace(/\/$/, '')&#125;/$&#123;files[i]&#125;"&gt;$&#123;files[i]&#125;&lt;/a&gt;&lt;/li&gt;` &#125; str += '&lt;/ul&gt;' res.writeHead(200, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.write(str); &#125;); &#125; &#125; &#125;); &#125; else &#123; res.writeHead(404, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;404 not found&lt;/div&gt;'); &#125; &#125;);&#125;);server.listen(3000);]]></content>
       <tags>
         <tag>nodejs</tag>
       </tags>
@@ -89,8 +89,8 @@
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>React</tag>
         <tag>Redux</tag>
+        <tag>React</tag>
       </tags>
   </entry>
   <entry>
