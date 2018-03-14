@@ -3,15 +3,15 @@
   <entry>
     <title><![CDATA[nodejs搭建简易文件服务器]]></title>
     <url>%2F2018%2F03%2F14%2Fnodejs%E6%90%AD%E5%BB%BA%E7%AE%80%E6%98%93%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%2F</url>
-    <content type="text"><![CDATA[123456789101112131415161718192021222324252627282930313233343536373839404142434445464748const http = require('http');var url = require("url");var fs = require("fs");const server = http.createServer((req, res) =&gt; &#123; var reqPath = url.parse(req.url).path; var filepath = __dirname + '/files' + reqPath; fs.exists(filepath, function (exists) &#123; if (exists) &#123; fs.stat(filepath, function (err, stats) &#123; if (err) &#123; res.writeHead(500, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;server error&lt;/div&gt;'); &#125; else &#123; if (stats.isFile()) &#123; var file = fs.createReadStream(filepath); res.writeHead(200, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); file.pipe(res); &#125; else &#123; fs.readdir(filepath, function (err, files) &#123; var str = '&lt;ul&gt;'; for (var i in files) &#123; // 这边url拼接要注意一下 str += `&lt;li&gt;&lt;a href="$&#123;reqPath.replace(/\/$/, '')&#125;/$&#123;files[i]&#125;"&gt;$&#123;files[i]&#125;&lt;/a&gt;&lt;/li&gt;` &#125; str += '&lt;/ul&gt;' res.writeHead(200, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.write(str); &#125;); &#125; &#125; &#125;); &#125; else &#123; res.writeHead(404, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;404 not found&lt;/div&gt;'); &#125; &#125;);&#125;);server.listen(3000);]]></content>
+    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849const http = require('http');const url = require("url");const fs = require("fs");const server = http.createServer((req, res) =&gt; &#123; const reqPath = url.parse(req.url).path.split('?')[0]; const filepath = __dirname + '/files' + reqPath; const resHeader = &#123; 'Content-Type': 'text/html;charset=utf8', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true, 'Access-Control-Allow-Headers': 'x-requested-with, content-type', &#125; fs.exists(filepath, function (exists) &#123; if (exists) &#123; fs.stat(filepath, function (err, stats) &#123; if (err) &#123; res.writeHead(500, resHeader); res.end('&lt;div styel="color:black;font-size:22px;"&gt;server error&lt;/div&gt;'); &#125; else &#123; if (stats.isFile()) &#123; const file = fs.createReadStream(filepath); res.writeHead(200, resHeader); file.pipe(res); &#125; else &#123; fs.readdir(filepath, function (err, files) &#123; let str = '&lt;ul&gt;'; for (let i in files) &#123; // 这边url拼接要注意一下 str += `&lt;li&gt;&lt;a href="$&#123;reqPath.replace(/\/$/, '')&#125;/$&#123;files[i]&#125;"&gt;$&#123;files[i]&#125;&lt;/a&gt;&lt;/li&gt;` &#125; str += '&lt;/ul&gt;' res.writeHead(200, resHeader); res.write(str); &#125;); &#125; &#125; &#125;); &#125; else &#123; res.writeHead(404, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;404 not found&lt;/div&gt;'); &#125; &#125;);&#125;);server.listen(3000);]]></content>
       <tags>
         <tag>nodejs</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[移动端网页命令行工具]]></title>
-    <url>%2F2018%2F03%2F03%2F%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%BD%91%E9%A1%B5%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%B7%A5%E5%85%B7%2F</url>
-    <content type="text"><![CDATA[1、vconsole腾讯出品，看log比较方便。git 地址: https://github.com/Tencent/vConsole使用方式： 123456789&lt;script src="path/to/vconsole.min.js"&gt;&lt;/script&gt;&lt;script&gt; // init vConsole var vConsole = new VConsole(); console.log('Hello world');&lt;/script&gt;import VConsole from 'vconsole';var vConsole = new VConsole(); 2、eruda功能很全的consolegit 地址：https://github.com/liriliri/eruda 使用方式： 12&lt;script src="//cdn.jsdelivr.net/npm/eruda"&gt;&lt;/script&gt;&lt;script&gt;eruda.init();&lt;/script&gt;]]></content>
+    <title><![CDATA[移动端网页开发者工具]]></title>
+    <url>%2F2018%2F03%2F03%2F%E7%A7%BB%E5%8A%A8%E7%AB%AF%E7%BD%91%E9%A1%B5%E5%BC%80%E5%8F%91%E8%80%85%E5%B7%A5%E5%85%B7%2F</url>
+    <content type="text"><![CDATA[1、vconsole腾讯出品，看log比较方便。git 地址: https://github.com/Tencent/vConsole使用方式： 123456789&lt;script src="path/to/vconsole.min.js"&gt;&lt;/script&gt;&lt;script&gt; // init vConsole var vConsole = new VConsole(); console.log('Hello world');&lt;/script&gt;import VConsole from 'vconsole';var vConsole = new VConsole(); 2、eruda功能很全的开发者工具git 地址：https://github.com/liriliri/eruda 使用方式： 12&lt;script src="//cdn.jsdelivr.net/npm/eruda"&gt;&lt;/script&gt;&lt;script&gt;eruda.init();&lt;/script&gt;]]></content>
       <tags>
         <tag>前端</tag>
         <tag>工具</tag>
@@ -89,8 +89,8 @@
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>Redux</tag>
         <tag>React</tag>
+        <tag>Redux</tag>
       </tags>
   </entry>
   <entry>
