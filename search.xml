@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[iOS 输入中文 产生特殊字符的解决办法]]></title>
+    <url>%2F2018%2F08%2F16%2Fios-%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87-%E4%BA%A7%E7%94%9F%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[iOS 手机浏览器在输入中文的时候，输入框里面除了拼音之外，字母之间还会出现一些特殊字符，如果监听input事件并且将内容发到后端去请求的话，就有可能产生影响。 例如：用户想要输入“人人”，输入框里面显示的是 “r e n r e n” 中间的空白字符，通过encodeURI方法之后，变成了了“%E2%80%86”,不同于普通空白符的“%20”。 解决办法：可以监听输入框的compositionstart方法设置一个标记位，监听compositionend取消标记位，标记位存在的时候表明用户正在输入但是没有选中候选项，这个时候就不发请求到后端。又或者可以把内容里面的特殊字符replace掉。 参考：https://developer.mozilla.org/en-US/docs/Web/Events/compositionstart]]></content>
+      <tags>
+        <tag>javascript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[nodejs搭建简易文件服务器]]></title>
     <url>%2F2018%2F03%2F14%2Fnodejs%E6%90%AD%E5%BB%BA%E7%AE%80%E6%98%93%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%2F</url>
     <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849const http = require('http');const url = require("url");const fs = require("fs");const server = http.createServer((req, res) =&gt; &#123; const reqPath = url.parse(req.url).path.split('?')[0]; const filepath = __dirname + '/files' + reqPath; const resHeader = &#123; 'Content-Type': 'text/html;charset=utf8', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true, 'Access-Control-Allow-Headers': 'x-requested-with, content-type', &#125; fs.exists(filepath, function (exists) &#123; if (exists) &#123; fs.stat(filepath, function (err, stats) &#123; if (err) &#123; res.writeHead(500, resHeader); res.end('&lt;div styel="color:black;font-size:22px;"&gt;server error&lt;/div&gt;'); &#125; else &#123; if (stats.isFile()) &#123; const file = fs.createReadStream(filepath); res.writeHead(200, resHeader); file.pipe(res); &#125; else &#123; fs.readdir(filepath, function (err, files) &#123; let str = '&lt;ul&gt;'; for (let i in files) &#123; // 这边url拼接要注意一下 str += `&lt;li&gt;&lt;a href="$&#123;reqPath.replace(/\/$/, '')&#125;/$&#123;files[i]&#125;"&gt;$&#123;files[i]&#125;&lt;/a&gt;&lt;/li&gt;` &#125; str += '&lt;/ul&gt;' res.writeHead(200, resHeader); res.write(str); &#125;); &#125; &#125; &#125;); &#125; else &#123; res.writeHead(404, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;404 not found&lt;/div&gt;'); &#125; &#125;);&#125;);server.listen(3000);]]></content>
@@ -263,8 +271,8 @@
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>前端</tag>
         <tag>jade</tag>
+        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
