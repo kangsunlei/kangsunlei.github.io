@@ -85,7 +85,7 @@
 <meta property="og:site_name" content="石头匠人的个人博客">
 <meta property="og:description" content="参考http://cn.redux.js.org项目中要使用react-redux，在学习的过程中有了这一篇笔记。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-12-10T12:11:23.156Z">
+<meta property="og:updated_time" content="2019-04-06T10:23:31.231Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Redux 学习笔记">
 <meta name="twitter:description" content="参考http://cn.redux.js.org项目中要使用react-redux，在学习的过程中有了这一篇笔记。">
@@ -357,8 +357,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">笔记</span>
+                  <a href="/categories/学习笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">学习笔记</span>
                   </a>
                 </span>
 
@@ -417,21 +417,18 @@
 <h3 id="纯函数更改"><a href="#纯函数更改" class="headerlink" title="纯函数更改"></a>纯函数更改</h3><p>被称作Reducer的纯函数专门用来响应Action修改状态树。<br>Reducer是纯函数，接收当前状态和一个Action，并返回修改后的状态。</p>
 <h2 id="Action"><a href="#Action" class="headerlink" title="Action"></a>Action</h2><p>Action 是把数据从应用传到 store 的有效载荷。 它是 store 数据的唯一来源。<br>尽量减少在 action 中传递的数据。</p>
 <h2 id="Reducer"><a href="#Reducer" class="headerlink" title="Reducer"></a>Reducer</h2><p>Action 只是描述了有事情发生了这件事实， 并没有指明应该如何更新 state。而这正是 reducer 要做的事情。</p>
-<p>reducer就是一个纯函数， 接收旧的 state 和 action， 返回新的 state。<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(previousState, action) =&gt; newState</span><br></pre></td></tr></table></figure></p>
-<blockquote>
+<p>reducer就是一个纯函数， 接收旧的 state 和 action， 返回新的 state。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(previousState, action) =&gt; newState</span><br></pre></td></tr></table></figure>
 <p>永远不要在 reducer 里做这些操作：</p>
 <ul>
 <li>修改传入参数；</li>
 <li>执行有副作用的操作， 如 API 请求和路由跳转；</li>
 <li>调用非纯函数， 如 Date.now() 或 Math.random() 。</li>
 </ul>
-</blockquote>
 <p>谨记 reducer 一定要保持纯净。<strong>只要传入参数相同， 返回计算得到的下⼀一 state 就一定相同。 没有特殊情况、 没有副作用， 没有 API 请求、 没有变量修改， 单纯执行计算。</strong></p>
 <p>注意：<br>1.不要修改 state 。<br>2.在 default 情况下返回旧的 state 。</p>
 <p>注意每个 reducer 只负责管理全局 state 中它负责的一部分。 每个 reducer 的 state 参数都不同， 分别对应它管理的那部分 state 数据。</p>
-<h2 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h2><p>使用 action 来描述“发生了什么”， 使用 reducers 来根据 action 更新 state 的方法。</p>
-<blockquote>
-<p>Store 就是把它们联系到一起的对象。 Store 有以下职责：</p>
+<h2 id="Store"><a href="#Store" class="headerlink" title="Store"></a>Store</h2><p>使用 action 来描述“发生了什么”， 使用 reducers 来根据 action 更新 state 的方法。<br>Store 就是把它们联系到一起的对象。 Store 有以下职责：</p>
 <ul>
 <li>维持应用的 state；</li>
 <li>提供 getState() 方法获取 state；</li>
@@ -439,7 +436,6 @@
 <li>通过 subscribe(listener) 注册监听器;</li>
 <li>通过 subscribe(listener) 返回的函数注销监听器。</li>
 </ul>
-</blockquote>
 <p>Redux 应用只有一个单一的 store。</p>
 <h2 id="数据流"><a href="#数据流" class="headerlink" title="数据流"></a>数据流</h2><p>严格的单向数据流是 Redux 架构的设计核心。</p>
 <p>这意味着应⽤中所有的数据都遵循相同的生命周期， 这样可以让应用变得更加可预测且容易理解。 同时也鼓励做数据范式化， 这样可以避免使用多个且独立的方法相互引用的重复数据。</p>
@@ -450,7 +446,8 @@
 <li>根 reducer 应该把多个子 reducer 输出合并成一个单一的 state 树。</li>
 <li>Redux store 保存了根 reducer 返回的完整 state 树。</li>
 </ul>
-<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>下面是官网的一个demo<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 下面这一段代码，就是 https://github.com/reactjs/redux 中的入门demo</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第一步：定义计算规则，即 reducer</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">counter</span>(<span class="params">state = <span class="number">0</span>, action</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'INCREMENT'</span>:</span><br><span class="line">                <span class="keyword">return</span> state + <span class="number">1</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'DECREMENT'</span>:</span><br><span class="line">                <span class="keyword">return</span> state - <span class="number">1</span></span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> state</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二步：根据计算规则生成 store</span></span><br><span class="line">    <span class="keyword">let</span> store = createStore(counter)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第三步：定义数据（即 state）变化之后的派发规则</span></span><br><span class="line">    store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'current state'</span>, store.getState())</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第四步：触发数据变化</span></span><br><span class="line">    store.dispatch(&#123;<span class="attr">type</span>: <span class="string">'INCREMENT'</span>&#125;)</span><br><span class="line">    store.dispatch(&#123;<span class="attr">type</span>: <span class="string">'INCREMENT'</span>&#125;)</span><br><span class="line">    store.dispatch(&#123;<span class="attr">type</span>: <span class="string">'DECREMENT'</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h2><p>下面是官网的一个demo</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; createStore &#125; <span class="keyword">from</span> <span class="string">'redux'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="comment">// 下面这一段代码，就是 https://github.com/reactjs/redux 中的入门demo</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第一步：定义计算规则，即 reducer</span></span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">counter</span>(<span class="params">state = <span class="number">0</span>, action</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">            <span class="keyword">case</span> <span class="string">'INCREMENT'</span>:</span><br><span class="line">                <span class="keyword">return</span> state + <span class="number">1</span></span><br><span class="line">            <span class="keyword">case</span> <span class="string">'DECREMENT'</span>:</span><br><span class="line">                <span class="keyword">return</span> state - <span class="number">1</span></span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">return</span> state</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第二步：根据计算规则生成 store</span></span><br><span class="line">    <span class="keyword">let</span> store = createStore(counter)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第三步：定义数据（即 state）变化之后的派发规则</span></span><br><span class="line">    store.subscribe(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">'current state'</span>, store.getState())</span><br><span class="line">    &#125;)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 第四步：触发数据变化</span></span><br><span class="line">    store.dispatch(&#123;<span class="attr">type</span>: <span class="string">'INCREMENT'</span>&#125;)</span><br><span class="line">    store.dispatch(&#123;<span class="attr">type</span>: <span class="string">'INCREMENT'</span>&#125;)</span><br><span class="line">    store.dispatch(&#123;<span class="attr">type</span>: <span class="string">'DECREMENT'</span>&#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <ul>
 <li>定义计算规则，即 reducer</li>
 <li>根据计算规则生成 store</li>
@@ -489,8 +486,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/24/React-学习笔记/" rel="next" title="React 学习笔记">
-                <i class="fa fa-chevron-left"></i> React 学习笔记
+              <a href="/2017/04/24/React-学习笔记（一）/" rel="next" title="React 学习笔记（一）">
+                <i class="fa fa-chevron-left"></i> React 学习笔记（一）
               </a>
             
           </div>
@@ -580,7 +577,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">37</span>
+                  <span class="site-state-item-count">40</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -591,7 +588,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">11</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -602,7 +599,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-count">24</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>

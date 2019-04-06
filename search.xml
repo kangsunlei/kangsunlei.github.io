@@ -1,30 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[React 学习笔记-事件系统]]></title>
+    <url>%2F2019%2F04%2F06%2FReact-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0-%E4%BA%8B%E4%BB%B6%E7%B3%BB%E7%BB%9F%2F</url>
+    <content type="text"><![CDATA[如果DOM上绑定了过多的事件处理函数，整个页面响应以及内存占用可能都会受到影响。React为了避免这类DOM事件滥用，同时屏蔽底层不同浏览器之间的事件系统差异，实现了一个中间层——SyntheticEvent。 React并不是将click事件绑在该div的真实DOM上，而是在document处监听所有支持的事件，当事件发生并冒泡至document处时，React将事件内容封装并交由真正的处理函数运行。 合成事件的监听器是统一注册在document上的，且仅有冒泡阶段。 如需注册捕获阶段的事件处理函数，则应为事件名添加 Capture。例如，处理捕获阶段的点击事件请使用 onClickCapture，而不是 onClick。 所以原生事件的监听器响应总是比合成事件的监听器早。 阻止原生事件的冒泡后，会阻止合成事件的监听器执行]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[React 学习笔记（二）]]></title>
+    <url>%2F2019%2F04%2F06%2FReact-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[看了慕课网双流的视频教程，记录了一些React笔记。 组件化 封装（视图、数据、变化逻辑） 复用（props） JSX 语法糖 开发环境下将JSX编译成JS 降低学习成本和编码工作量 独立的标准，可以用在其他地方（例如：Preact） 核心函数：React.createElement 1234567891011121314151617import Test from './Test'var jsx = ( &lt;div&gt; &lt;Test/&gt; &lt;input type="text" value=&#123;this.state.value&#125;/&gt; &lt;ul&gt; &#123; list.map(item =&gt; &#123; return ( &lt;li&gt;&#123;item&#125;&lt;/li&gt; ) &#125;) &#125; &lt;/ul&gt; &lt;/div&gt;) 通过Babel转换后 12345678910111213141516171819import Test from './Test';var jsx = React.createElement( "div", null, React.createElement(Test, null), React.createElement("input", &#123; type: "text", value: this.state.value &#125;), React.createElement( "ul", null, list.map(item =&gt; &#123; return React.createElement( "li", null, item ); &#125;) )); 自定义组件的解析处理组件（自定义标签）的时候，传入的第一个参数是构造函数，而不是字符串。 需要组件声明render函数 实际上是先根据props执行组件的render函数，返回一个vnode 可以理解为递归 vdom snabbdom h，patch jsx -> html 的过程中需要vdom 初次渲染 ReactDOM.render(\, container)，触发patch(container, vnode) re-render - setState，触发patch(vnode, newVnode) setState 异步 出于性能考虑，不能每次更改state都重新渲染 即使每次都重新渲染，用户也看不到，因为js执行的时候，dom会卡顿 vue修改属性也是异步的 过程： 每个组件实例，都有renderComponent方法(extends Component) 执行renderComponent会重新执行实例的render render返回newVnode，然后拿到preVnode 执行patch(preVnode, newVnode) Vue &amp; React vue-本质是MVVM框架，由MVC发展而来 react-本质是前端组件化框架，由后端框架发展而来 vue-使用模板 react-JSX]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
+      <tags>
+        <tag>React</tag>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[解码URL遇到的问题]]></title>
+    <url>%2F2019%2F04%2F06%2F%E8%A7%A3%E7%A0%81URL%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[日常开发过程中遇到了一个问题：后端返回的文件下载链接中的文件名，把原文件名的空格转义成了+，而前端解码是不会把+转回空格的。 原因是两边采用了不同的编码规范。 https://my.oschina.net/joymufeng/blog/620205 空格目前有两种不同的编码方式，一种是在HTML4中定义的，而另一种是在RFC-3986中定义的。按照HTML4规范，空格应该被编码成加号”+”，而如果字符本身就是加号”+”，则应该被编码成%2B。 RFC-3986中采用统一的编码方式，字符的编码格式为：%HH(H为十六进制字符)， 并没有对空格做特殊处理。按照RFC-3986规范，空格被编码成%20，而加号”+”被编码成%2B。 PS: encodeURI方法不会对下列字符编码: ASCII字母、数字、~!@\#$&amp;\*()=:/,;?+&#39; encodeURIComponent方法不会对下列字符编码:ASCII字母、数字、~!\*()&#39; 因此，面对后端的这种编码方式，前端处理的话要先将url里面的+替换成%20，再用decodeURIComponent解码]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[vue 实现流程]]></title>
+    <url>%2F2019%2F04%2F06%2Fvue-%E5%AE%9E%E7%8E%B0%E6%B5%81%E7%A8%8B%2F</url>
+    <content type="text"><![CDATA[日常看视频教程，记录其中讲到的 vue 实现流程。 1、解析模板成render函数 with 的用法 模板中的所有信息都被render函数包含 模板中用到的data中的属性，都变成了JS变量 模板中的v-model v-for v-on 都变成了JS逻辑 render函数返回vnode 2、响应式开始监听 Object.defineProperty 将data的属性代理到vm上 3、首次渲染，显示页面，且绑定依赖 初次渲染，执行updateComponent，执行vm._render() 执行render函数，会访问到vm.list vm.title 会被响应式的get方法监听到 执行updateComponent，会走到vdom的patch方法 patch将vnode渲染成DOM，初次渲染完成 为什么要监听get，不直接监听set? data中的属性有的会被用掉，有的可能不会被用到 只有被用到的才会走到get 避免不必要的重复渲染 4、data属性变化 修改属性，被响应式的set监听到 set中执行updateComponent updateComponent重新执行vm._render() 生成的vnode和prevVnode，通过patch进行对比 渲染到html中]]></content>
+      <categories>
+        <category>学习笔记</category>
+      </categories>
+      <tags>
+        <tag>前端</tag>
+        <tag>vue.js</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[图床挂了]]></title>
     <url>%2F2019%2F04%2F06%2F%E5%9B%BE%E5%BA%8A%E6%8C%82%E4%BA%86%2F</url>
     <content type="text"><![CDATA[今天整理博客内容的时候，发现之前放在七牛云上的图片显示不出来了，登录七牛控制台也看不了。后面发现是七牛云回收了所有的测试域名🙃，如果想继续“免费”使用七牛云10GB的存储空间作为图床的话，就要设置一个自定义域名。我之前正好在阿里云买了个域名，但是光有域名还不行，还需要给域名备案。域名备案的时候发现域名需要对应有一个阿里云产品。坑。我目前不怎么用的到其他阿里云产品，故只能放弃七牛云作为免费图床了。 更坑的是，有一些转载的文章也用了七牛云作为免费图床，这下子就完全找不到了。 更更坑的是，之前上传到七牛云的图片，下载不了了。 以后这种第三方免费的服务还是要慎重选择呀。]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[iOS 输入中文 产生特殊字符的解决办法]]></title>
     <url>%2F2018%2F08%2F16%2Fios-%E8%BE%93%E5%85%A5%E4%B8%AD%E6%96%87-%E4%BA%A7%E7%94%9F%E7%89%B9%E6%AE%8A%E5%AD%97%E7%AC%A6%E7%9A%84%E8%A7%A3%E5%86%B3%E5%8A%9E%E6%B3%95%2F</url>
     <content type="text"><![CDATA[iOS 手机浏览器在输入中文的时候，输入框里面除了拼音之外，字母之间还会出现一些特殊字符，如果监听input事件并且将内容发到后端去请求的话，就有可能产生影响。 例如：用户想要输入“人人”，输入框里面显示的是 “r e n r e n” 中间的空白字符，通过encodeURI方法之后，变成了了“%E2%80%86”,不同于普通空白符的“%20”。 解决办法：可以监听输入框的compositionstart方法设置一个标记位，监听compositionend取消标记位，标记位存在的时候表明用户正在输入但是没有选中候选项，这个时候就不发请求到后端。又或者可以把内容里面的特殊字符replace掉。 参考：https://developer.mozilla.org/en-US/docs/Web/Events/compositionstart]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
       <tags>
-        <tag>javascript</tag>
+        <tag>JavaScript</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[nodejs搭建简易文件服务器]]></title>
     <url>%2F2018%2F03%2F14%2Fnodejs%E6%90%AD%E5%BB%BA%E7%AE%80%E6%98%93%E6%96%87%E4%BB%B6%E6%9C%8D%E5%8A%A1%E5%99%A8%2F</url>
-    <content type="text"><![CDATA[12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849const http = require('http');const url = require("url");const fs = require("fs");const server = http.createServer((req, res) =&gt; &#123; const reqPath = url.parse(req.url).path.split('?')[0]; const filepath = __dirname + '/files' + reqPath; const resHeader = &#123; 'Content-Type': 'text/html;charset=utf8', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true, 'Access-Control-Allow-Headers': 'x-requested-with, content-type', &#125; fs.exists(filepath, function (exists) &#123; if (exists) &#123; fs.stat(filepath, function (err, stats) &#123; if (err) &#123; res.writeHead(500, resHeader); res.end('&lt;div styel="color:black;font-size:22px;"&gt;server error&lt;/div&gt;'); &#125; else &#123; if (stats.isFile()) &#123; const file = fs.createReadStream(filepath); res.writeHead(200, resHeader); file.pipe(res); &#125; else &#123; fs.readdir(filepath, function (err, files) &#123; let str = '&lt;ul&gt;'; for (let i in files) &#123; // 这边url拼接要注意一下 str += `&lt;li&gt;&lt;a href="$&#123;reqPath.replace(/\/$/, '')&#125;/$&#123;files[i]&#125;"&gt;$&#123;files[i]&#125;&lt;/a&gt;&lt;/li&gt;` &#125; str += '&lt;/ul&gt;' res.writeHead(200, resHeader); res.write(str); &#125;); &#125; &#125; &#125;); &#125; else &#123; res.writeHead(404, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;404 not found&lt;/div&gt;'); &#125; &#125;);&#125;);server.listen(3000);]]></content>
+    <content type="text"><![CDATA[日常瞎折腾，随便实现了一个文件服务（只能浏览文件）。如果是文件夹的话，根据目录结构生成ul list;如果是文件的话，直接返回文件内容。 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849const http = require('http');const url = require("url");const fs = require("fs");const server = http.createServer((req, res) =&gt; &#123; const reqPath = url.parse(req.url).path.split('?')[0]; const filepath = __dirname + '/files' + reqPath; const resHeader = &#123; 'Content-Type': 'text/html;charset=utf8', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Credentials': true, 'Access-Control-Allow-Headers': 'x-requested-with, content-type', &#125; fs.exists(filepath, function (exists) &#123; if (exists) &#123; fs.stat(filepath, function (err, stats) &#123; if (err) &#123; res.writeHead(500, resHeader); res.end('&lt;div styel="color:black;font-size:22px;"&gt;server error&lt;/div&gt;'); &#125; else &#123; if (stats.isFile()) &#123; const file = fs.createReadStream(filepath); res.writeHead(200, resHeader); file.pipe(res); &#125; else &#123; fs.readdir(filepath, function (err, files) &#123; let str = '&lt;ul&gt;'; for (let i in files) &#123; // 这边url拼接要注意一下 str += `&lt;li&gt;&lt;a href="$&#123;reqPath.replace(/\/$/, '')&#125;/$&#123;files[i]&#125;"&gt;$&#123;files[i]&#125;&lt;/a&gt;&lt;/li&gt;` &#125; str += '&lt;/ul&gt;' res.writeHead(200, resHeader); res.write(str); &#125;); &#125; &#125; &#125;); &#125; else &#123; res.writeHead(404, &#123; 'Content-Type': 'text/html;charset=utf8' &#125;); res.end('&lt;div styel="color:black;font-size:22px;"&gt;404 not found&lt;/div&gt;'); &#125; &#125;);&#125;);server.listen(3000);]]></content>
+      <categories>
+        <category>Node.js</category>
+      </categories>
       <tags>
-        <tag>nodejs</tag>
+        <tag>node.js</tag>
       </tags>
   </entry>
   <entry>
     <title><![CDATA[H5页面调试工具]]></title>
     <url>%2F2018%2F03%2F03%2FH5%E9%A1%B5%E9%9D%A2%E8%B0%83%E8%AF%95%E5%B7%A5%E5%85%B7%2F</url>
-    <content type="text"><![CDATA[1、vconsole腾讯出品，看log比较方便。git 地址: https://github.com/Tencent/vConsole使用方式： 123456789&lt;script src="path/to/vconsole.min.js"&gt;&lt;/script&gt;&lt;script&gt; // init vConsole var vConsole = new VConsole(); console.log('Hello world');&lt;/script&gt;import VConsole from 'vconsole';var vConsole = new VConsole(); 2、eruda功能很全的开发者工具git 地址：https://github.com/liriliri/eruda 使用方式： 12&lt;script src="//cdn.jsdelivr.net/npm/eruda"&gt;&lt;/script&gt;&lt;script&gt;eruda.init();&lt;/script&gt; 3、spy-debugger一站式页面调试、抓包工具。远程调试任何手机浏览器页面，任何手机移动端webview（如：微信，HybridApp等）。支持HTTP/HTTPS，无需USB连接设备。git 地址：https://github.com/wuchangming/spy-debugger 使用方式：1sudo npm install spy-debugger -g 第一步：手机和PC保持在同一网络下（比如同时连到一个Wi-Fi下） 第二步：命令行输入spy-debugger，按命令行提示用浏览器打开相应地址。 第三步：设置手机的HTTP代理，代理IP地址设置为PC的IP地址，端口为spy-debugger的启动端口(默认端口：9888)。 Android设置代理步骤：设置 - WLAN - 长按选中网络 - 修改网络 - 高级 - 代理设置 - 手动 iOS设置代理步骤：设置 - 无线局域网 - 选中网络 - HTTP代理手动 第四步：手机安装证书。注：手机必须先设置完代理后再通过(非微信)手机浏览器访问http://s.xxx安装证书（手机首次调试需要安装证书，已安装了证书的手机无需重复安装)。iOS新安装的证书需要手动打开证书信任 第五步：用手机浏览器访问你要调试的页面即可。]]></content>
+    <content type="text"><![CDATA[日常开发H5的过程中经常需要调试页面，下面列举了几个日常使用的调试工具。 1、vconsole腾讯出品，看log比较方便。git 地址: https://github.com/Tencent/vConsole使用方式： 123456789&lt;script src="path/to/vconsole.min.js"&gt;&lt;/script&gt;&lt;script&gt; // init vConsole var vConsole = new VConsole(); console.log('Hello world');&lt;/script&gt;import VConsole from 'vconsole';var vConsole = new VConsole(); 2、eruda功能很全的开发者工具git 地址：https://github.com/liriliri/eruda 使用方式： 12&lt;script src="//cdn.jsdelivr.net/npm/eruda"&gt;&lt;/script&gt;&lt;script&gt;eruda.init();&lt;/script&gt; 3、spy-debugger一站式页面调试、抓包工具。远程调试任何手机浏览器页面，任何手机移动端webview（如：微信，HybridApp等）。支持HTTP/HTTPS，无需USB连接设备。git 地址：https://github.com/wuchangming/spy-debugger 使用方式：1sudo npm install spy-debugger -g 第一步：手机和PC保持在同一网络下（比如同时连到一个Wi-Fi下） 第二步：命令行输入spy-debugger，按命令行提示用浏览器打开相应地址。 第三步：设置手机的HTTP代理，代理IP地址设置为PC的IP地址，端口为spy-debugger的启动端口(默认端口：9888)。 Android设置代理步骤：设置 - WLAN - 长按选中网络 - 修改网络 - 高级 - 代理设置 - 手动 iOS设置代理步骤：设置 - 无线局域网 - 选中网络 - HTTP代理手动 第四步：手机安装证书。注：手机必须先设置完代理后再通过(非微信)手机浏览器访问http://s.xxx安装证书（手机首次调试需要安装证书，已安装了证书的手机无需重复安装)。iOS新安装的证书需要手动打开证书信任 第五步：用手机浏览器访问你要调试的页面即可。]]></content>
       <tags>
         <tag>前端</tag>
         <tag>工具</tag>
@@ -65,11 +121,11 @@
     <url>%2F2017%2F06%2F06%2FsetInterval-%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E5%8A%A8%E7%94%BB%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[最近在做公司的官网，首页用到了一些循环播放的动画，类似于轮播图。之前一般是直接套用插件，不常手动自己做这种，但是为了避免引入第三方库导致网页过于臃肿，所以就凭着自己掌握的 setTimeout 和 setInterval 的一些简单的知识就开始了制作。 要求：五个 div 依次切换。间隔3s 我的第一个想法是：每一个循环作为一个函数，每15s循环一次。于是我的代码是这样的：1234567891011121314151617181920212223242526var $el = $('#animat-icon ul');var $elText = $('.animat-text');var n = $('#animat-icon ul li').length;//渐隐切换function firstAnimat() &#123; for (var i = 0; i &lt; n; i++) &#123; (function(i) &#123; setTimeout(function() &#123; if (i != 0) &#123; $el.find('li').eq(i - 1).removeClass('fade'); $elText.eq(i - 1).removeClass('fade'); &#125; else &#123; $el.find('li').eq(n - 1).removeClass('fade'); $elText.eq(n - 1).removeClass('fade'); &#125; $el.find('li').eq(i).addClass('fade'); $elText.eq(i).addClass('fade'); &#125;, 3000 * i) &#125;)(i) &#125;&#125;//不等待firstAnimat();setInterval(function() &#123; firstAnimat() &#125;, 3000 * n); fade用于表现css3的动画，渐隐渐现啥的。写完看了一眼效果实现了，并且我用到了面试的时候被问到的闭包的问题，我还自我感觉很良好。 然后问题就出现了，当离开当前标签页一段时间之后再回来，所有的文字重叠在了一起，然后依次迅速的执行了fade定义的动画。我的第一想法是浏览器出于性能考虑，停止了我的动画。 这个原因可能是对的吧，因为没有人说的清楚是怎么回事儿。 百度之：有人说： DOM的操作也是消耗时间的，DOM的操作不顺，卡了下，时间就不对了，所以那样不是很稳定。 后面我改成了这样：123456789101112131415161718192021222324252627282930313233343536373839404142var $el = $('#animat-icon ul');var $elText = $('.animat-text');var n = $('#animat-icon ul li').length;var index = 0;var timer;//渐隐切换function firstAnimat() &#123; if (index != 0) &#123; $el.find('li').eq(index - 1).removeClass('fade'); $elText.eq(index - 1).removeClass('fade'); &#125; else &#123; $el.find('li').eq(n - 1).removeClass('fade'); $elText.eq(n - 1).removeClass('fade'); &#125; $el.find('li').eq(index).addClass('fade'); $elText.eq(index).addClass('fade'); index += 1; if(index&gt;=n)&#123; index = 0; &#125;&#125;start();function start()&#123; firstAnimat(); timer = setInterval(function() &#123; firstAnimat() &#125;, 3000);&#125;function stop()&#123; clearInterval(timer);&#125;window.addEventListener("blur", function(e) &#123; stop()&#125;),window.addEventListener("focus", function(e) &#123; start()&#125;); 由于表现出来的是在我切换出去后，dom卡了几下，那我直接主动清除定时器不就好了。 问题暂时解决了，但是看起来还是很不优雅，相信随着我之后的学习，会一点一点完善起来的。]]></content>
       <categories>
-        <category>笔记</category>
+        <category>学习笔记</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>JavaScript</tag>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -97,9 +153,9 @@
   <entry>
     <title><![CDATA[Redux 学习笔记]]></title>
     <url>%2F2017%2F04%2F27%2FRedux-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[参考http://cn.redux.js.org项目中要使用react-redux，在学习的过程中有了这一篇笔记。 核心原则 应用的整个状态树必须被存储在一个单例对象store中。 更新状态树的唯一方法是派发一个action对象来描述发生的情况。 特别需要指出的是，用来处理状态树更新的reducers函数必须是纯函数。 核心概念强制规定将每一次变化都描述为一个Action对象，使得我们可以清晰的理解程序中发生变化的情况。对于这些变化，清晰的知道为什么变化。Action就像程序中发生变化情况的面包屑。 最后，再通过Reducer方法，将State和Action结合在一起。 三大原则单一数据源原则应用的整个状态存储在单例store的对象树中。 状态只读改变状态树的唯一方式是通过派发action——一个用来描述发生情况的对象 纯函数更改被称作Reducer的纯函数专门用来响应Action修改状态树。Reducer是纯函数，接收当前状态和一个Action，并返回修改后的状态。 ActionAction 是把数据从应用传到 store 的有效载荷。 它是 store 数据的唯一来源。尽量减少在 action 中传递的数据。 ReducerAction 只是描述了有事情发生了这件事实， 并没有指明应该如何更新 state。而这正是 reducer 要做的事情。 reducer就是一个纯函数， 接收旧的 state 和 action， 返回新的 state。1(previousState, action) =&gt; newState 永远不要在 reducer 里做这些操作： 修改传入参数； 执行有副作用的操作， 如 API 请求和路由跳转； 调用非纯函数， 如 Date.now() 或 Math.random() 。 谨记 reducer 一定要保持纯净。只要传入参数相同， 返回计算得到的下⼀一 state 就一定相同。 没有特殊情况、 没有副作用， 没有 API 请求、 没有变量修改， 单纯执行计算。 注意：1.不要修改 state 。2.在 default 情况下返回旧的 state 。 注意每个 reducer 只负责管理全局 state 中它负责的一部分。 每个 reducer 的 state 参数都不同， 分别对应它管理的那部分 state 数据。 Store使用 action 来描述“发生了什么”， 使用 reducers 来根据 action 更新 state 的方法。 Store 就是把它们联系到一起的对象。 Store 有以下职责： 维持应用的 state； 提供 getState() 方法获取 state； 提供 dispatch(action) 方法更新 state； 通过 subscribe(listener) 注册监听器; 通过 subscribe(listener) 返回的函数注销监听器。 Redux 应用只有一个单一的 store。 数据流严格的单向数据流是 Redux 架构的设计核心。 这意味着应⽤中所有的数据都遵循相同的生命周期， 这样可以让应用变得更加可预测且容易理解。 同时也鼓励做数据范式化， 这样可以避免使用多个且独立的方法相互引用的重复数据。 Redux 应用中数据的生命周期遵循下面 4 个步骤： 调用 store.dispatch(action)。 Redux store 调用传入的 reducer 函数。 根 reducer 应该把多个子 reducer 输出合并成一个单一的 state 树。 Redux store 保存了根 reducer 返回的完整 state 树。 步骤下面是官网的一个demo123456789101112131415161718192021222324252627282930import &#123; createStore &#125; from 'redux'export default function () &#123; // 下面这一段代码，就是 https://github.com/reactjs/redux 中的入门demo // 第一步：定义计算规则，即 reducer function counter(state = 0, action) &#123; switch (action.type) &#123; case 'INCREMENT': return state + 1 case 'DECREMENT': return state - 1 default: return state &#125; &#125; // 第二步：根据计算规则生成 store let store = createStore(counter) // 第三步：定义数据（即 state）变化之后的派发规则 store.subscribe(() =&gt; &#123; console.log('current state', store.getState()) &#125;) // 第四步：触发数据变化 store.dispatch(&#123;type: 'INCREMENT'&#125;) store.dispatch(&#123;type: 'INCREMENT'&#125;) store.dispatch(&#123;type: 'DECREMENT'&#125;)&#125; 定义计算规则，即 reducer 根据计算规则生成 store 定义数据（即 state）变化之后的派发规则、 触发数据变化]]></content>
+    <content type="text"><![CDATA[参考http://cn.redux.js.org项目中要使用react-redux，在学习的过程中有了这一篇笔记。 核心原则 应用的整个状态树必须被存储在一个单例对象store中。 更新状态树的唯一方法是派发一个action对象来描述发生的情况。 特别需要指出的是，用来处理状态树更新的reducers函数必须是纯函数。 核心概念强制规定将每一次变化都描述为一个Action对象，使得我们可以清晰的理解程序中发生变化的情况。对于这些变化，清晰的知道为什么变化。Action就像程序中发生变化情况的面包屑。 最后，再通过Reducer方法，将State和Action结合在一起。 三大原则单一数据源原则应用的整个状态存储在单例store的对象树中。 状态只读改变状态树的唯一方式是通过派发action——一个用来描述发生情况的对象 纯函数更改被称作Reducer的纯函数专门用来响应Action修改状态树。Reducer是纯函数，接收当前状态和一个Action，并返回修改后的状态。 ActionAction 是把数据从应用传到 store 的有效载荷。 它是 store 数据的唯一来源。尽量减少在 action 中传递的数据。 ReducerAction 只是描述了有事情发生了这件事实， 并没有指明应该如何更新 state。而这正是 reducer 要做的事情。 reducer就是一个纯函数， 接收旧的 state 和 action， 返回新的 state。 1(previousState, action) =&gt; newState 永远不要在 reducer 里做这些操作： 修改传入参数； 执行有副作用的操作， 如 API 请求和路由跳转； 调用非纯函数， 如 Date.now() 或 Math.random() 。 谨记 reducer 一定要保持纯净。只要传入参数相同， 返回计算得到的下⼀一 state 就一定相同。 没有特殊情况、 没有副作用， 没有 API 请求、 没有变量修改， 单纯执行计算。 注意：1.不要修改 state 。2.在 default 情况下返回旧的 state 。 注意每个 reducer 只负责管理全局 state 中它负责的一部分。 每个 reducer 的 state 参数都不同， 分别对应它管理的那部分 state 数据。 Store使用 action 来描述“发生了什么”， 使用 reducers 来根据 action 更新 state 的方法。Store 就是把它们联系到一起的对象。 Store 有以下职责： 维持应用的 state； 提供 getState() 方法获取 state； 提供 dispatch(action) 方法更新 state； 通过 subscribe(listener) 注册监听器; 通过 subscribe(listener) 返回的函数注销监听器。 Redux 应用只有一个单一的 store。 数据流严格的单向数据流是 Redux 架构的设计核心。 这意味着应⽤中所有的数据都遵循相同的生命周期， 这样可以让应用变得更加可预测且容易理解。 同时也鼓励做数据范式化， 这样可以避免使用多个且独立的方法相互引用的重复数据。 Redux 应用中数据的生命周期遵循下面 4 个步骤： 调用 store.dispatch(action)。 Redux store 调用传入的 reducer 函数。 根 reducer 应该把多个子 reducer 输出合并成一个单一的 state 树。 Redux store 保存了根 reducer 返回的完整 state 树。 步骤下面是官网的一个demo 123456789101112131415161718192021222324252627282930import &#123; createStore &#125; from 'redux'export default function () &#123; // 下面这一段代码，就是 https://github.com/reactjs/redux 中的入门demo // 第一步：定义计算规则，即 reducer function counter(state = 0, action) &#123; switch (action.type) &#123; case 'INCREMENT': return state + 1 case 'DECREMENT': return state - 1 default: return state &#125; &#125; // 第二步：根据计算规则生成 store let store = createStore(counter) // 第三步：定义数据（即 state）变化之后的派发规则 store.subscribe(() =&gt; &#123; console.log('current state', store.getState()) &#125;) // 第四步：触发数据变化 store.dispatch(&#123;type: 'INCREMENT'&#125;) store.dispatch(&#123;type: 'INCREMENT'&#125;) store.dispatch(&#123;type: 'DECREMENT'&#125;)&#125; 定义计算规则，即 reducer 根据计算规则生成 store 定义数据（即 state）变化之后的派发规则、 触发数据变化]]></content>
       <categories>
-        <category>笔记</category>
+        <category>学习笔记</category>
       </categories>
       <tags>
         <tag>React</tag>
@@ -107,24 +163,27 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[React 学习笔记]]></title>
-    <url>%2F2017%2F04%2F24%2FReact-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
-    <content type="text"><![CDATA[主要记录一些概念。 JSX所谓的JSX其实就是JavaScript对象。 JSX是JavaScript语言的一种语法扩展，长得像HTML，但并不是HTML。 React.js可以用JSX来描述你的组件长什么样的。 JSX在编译的时候会变成相应的JavaScript对象描述。 react-dom负责把这个用来描述UI信息的JavaScript对象变成DOM元素，并且渲染到页面上。 组件 自定义的组件都必须要用大写字母开头，普通的 HTML 标签都用小写字母开头。 事件监听 这些 on* 的事件监听只能用在普通的 HTML 的标签上，而不能用在组件标签上。 React.js 会给每个事件监听传入一个 event 对象，这个对象提供的功能和浏览器提供的功能一致，而且它是兼容所有浏览器的。 React.js 的事件监听方法需要手动 bind 到当前实例，这种模式在 React.js 中非常常用。 setState setState方法由父类Component所提供。当我们调用这个函数的时候，React.js 会更新组件的状态state，并且重新调用render方法，然后再把render方法所渲染的最新的内容显示到页面上。 这里还有要注意的是，当你调用setState的时候，React.js 并不会马上修改state。而是把这个对象放到一个更新队列里面，稍后才会从队列当中把新的状态提取出来合并到state当中，然后再触发组件更新。 在使用 React.js 的时候，并不需要担心多次进行setState会带来性能问题。 props 在使用一个组件的时候，可以把参数放在标签的属性当中，所有的属性都会作为props对象的键值。 可以通过给组件添加类属性defaultProps来配置默认参数。 props一旦传入，你就不可以在组件内部对它进行修改。但是你可以通过父组件主动重新渲染的方式来传入新的props，从而达到更新的效果。 state VS props state是让组件控制自己的状态，props是让外部对组件自己进行配置。 key 对于用表达式套数组罗列到页面上的元素，都要为每个元素加上key属性，这个key必须是每个元素唯一的标识。一般来说，key的值可以直接后台数据返回的id，因为后台的id都是唯一的。 挂载 React.js将组件渲染，并且构造DOM元素然后塞入页面的过程称为组件的挂载。 生命周期 componentWillMount：组件挂载开始之前，也就是在组件调用 render 方法之前调用。 componentDidMount：组件挂载完成以后，也就是 DOM 元素已经插入页面后调用。 componentWillUnmount：组件对应的 DOM 元素从页面中删除之前调用。 ref??? props.children 使用自定义组件的时候，可以在其中嵌套 JSX 结构。嵌套的结构在组件内部都可以通过props.children获取到，这种组件编写方式在编写容器类型的组件当中非常有用。 dangerouslySetHTML 出于安全考虑的原因（XSS 攻击），在 React.js 当中所有的表达式插入的内容都会被自动转义。设置动态 HTML 结构:1234567render () &#123; return ( &lt;div className='editor-wrapper' dangerouslySetInnerHTML=&#123;&#123;__html: this.state.content&#125;&#125; /&gt; )&#125; 需要给dangerouslySetInnerHTML传入一个对象，这个对象的__html属性值就相当于元素的innerHTML，这样我们就可以动态渲染元素的innerHTML结构了。 style1&lt;h1 style=&#123;&#123;fontSize: '12px', color: 'red'&#125;&#125;&gt;React.js 小书&lt;/h1&gt; 只要简单地setState({color: &#39;blue&#39;})就可以修改元素的颜色成蓝色。 PropTypes通过PropTypes给组件的参数做类型限制，可以在帮助我们迅速定位错误，这在构建大型应用程序的时候特别有用；另外，给组件加上propTypes，也让组件的开发、使用更加规范清晰。 顺序 组件的内容编写顺序如下： static 开头的类属性，如defaultProps、propTypes。 构造函数，constructor。 getter/setter（还不了解的同学可以暂时忽略）。 组件生命周期。 _开头的私有方法。 事件监听方法，handle*。 render*开头的方法，有时候render()方法里面的内容会分开到不同函数里面进行，这些函数都以render* 开头。 render()方法。 高阶组件 高阶组件就是一个函数，传给它一个组件，它返回一个新的组件。新的组件使用传入的组件作为子组件。高阶组件的作用是用于代码复用，可以把组件之间可复用的代码、逻辑抽离到高阶组件当中。新的组件和传入的组件通过props传递信息。]]></content>
+    <title><![CDATA[React 学习笔记（一）]]></title>
+    <url>%2F2017%2F04%2F24%2FReact-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[主要记录一些概念。 JSX所谓的JSX其实就是JavaScript对象。 JSX是JavaScript语言的一种语法扩展，长得像HTML，但并不是HTML。 React.js可以用JSX来描述你的组件长什么样的。 JSX在编译的时候会变成相应的JavaScript对象描述。 react-dom负责把这个用来描述UI信息的JavaScript对象变成DOM元素，并且渲染到页面上。 组件自定义的组件都必须要用大写字母开头，普通的 HTML 标签都用小写字母开头。 事件监听 这些 on* 的事件监听只能用在普通的 HTML 的标签上，而不能用在组件标签上。 React.js 会给每个事件监听传入一个 event 对象，这个对象提供的功能和浏览器提供的功能一致，而且它是兼容所有浏览器的。 React.js 的事件监听方法需要手动 bind 到当前实例，这种模式在 React.js 中非常常用。 setStatesetState方法由父类Component所提供。当我们调用这个函数的时候，React.js 会更新组件的状态state，并且重新调用render方法，然后再把render方法所渲染的最新的内容显示到页面上。 这里还有要注意的是，当你调用setState的时候，React.js 并不会马上修改state。而是把这个对象放到一个更新队列里面，稍后才会从队列当中把新的状态提取出来合并到state当中，然后再触发组件更新。 在使用 React.js 的时候，并不需要担心多次进行setState会带来性能问题。 props 在使用一个组件的时候，可以把参数放在标签的属性当中，所有的属性都会作为props对象的键值。 可以通过给组件添加类属性defaultProps来配置默认参数。 props一旦传入，你就不可以在组件内部对它进行修改。但是你可以通过父组件主动重新渲染的方式来传入新的props，从而达到更新的效果。 state VS propsstate是让组件控制自己的状态，props是让外部对组件自己进行配置。 key对于用表达式套数组罗列到页面上的元素，都要为每个元素加上key属性，这个key必须是每个元素唯一的标识。一般来说，key的值可以直接后台数据返回的id，因为后台的id都是唯一的。 挂载React.js将组件渲染，并且构造DOM元素然后塞入页面的过程称为组件的挂载。 生命周期 componentWillMount：组件挂载开始之前，也就是在组件调用 render 方法之前调用。 componentDidMount：组件挂载完成以后，也就是 DOM 元素已经插入页面后调用。 componentWillUnmount：组件对应的 DOM 元素从页面中删除之前调用。 props.children使用自定义组件的时候，可以在其中嵌套 JSX 结构。嵌套的结构在组件内部都可以通过props.children获取到，这种组件编写方式在编写容器类型的组件当中非常有用。 dangerouslySetHTML出于安全考虑的原因（XSS 攻击），在 React.js 当中所有的表达式插入的内容都会被自动转义。设置动态 HTML 结构: 1234567render () &#123; return ( &lt;div className='editor-wrapper' dangerouslySetInnerHTML=&#123;&#123;__html: this.state.content&#125;&#125; /&gt; )&#125; 需要给dangerouslySetInnerHTML传入一个对象，这个对象的__html属性值就相当于元素的innerHTML，这样我们就可以动态渲染元素的innerHTML结构了。 style1&lt;h1 style=&#123;&#123;fontSize: '12px', color: 'red'&#125;&#125;&gt;React.js 小书&lt;/h1&gt; 只要简单地setState({color: &#39;blue&#39;})就可以修改元素的颜色成蓝色。 PropTypes通过PropTypes给组件的参数做类型限制，可以在帮助我们迅速定位错误，这在构建大型应用程序的时候特别有用；另外，给组件加上propTypes，也让组件的开发、使用更加规范清晰。 顺序组件的内容编写顺序如下： static 开头的类属性，如defaultProps、propTypes。 构造函数，constructor。 getter/setter（还不了解的同学可以暂时忽略）。 组件生命周期。 _开头的私有方法。 事件监听方法，handle*。 render*开头的方法，有时候render()方法里面的内容会分开到不同函数里面进行，这些函数都以render* 开头。 render()方法。 高阶组件高阶组件就是一个函数，传给它一个组件，它返回一个新的组件。新的组件使用传入的组件作为子组件。高阶组件的作用是用于代码复用，可以把组件之间可复用的代码、逻辑抽离到高阶组件当中。新的组件和传入的组件通过props传递信息。]]></content>
+      <categories>
+        <category>React</category>
+      </categories>
       <tags>
         <tag>React</tag>
         <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[移动端web页面自适应——rem]]></title>
-    <url>%2F2017%2F04%2F17%2F%E7%A7%BB%E5%8A%A8%E7%AB%AFweb%E9%A1%B5%E9%9D%A2%E8%87%AA%E9%80%82%E5%BA%94%E2%80%94%E2%80%94rem%2F</url>
+    <title><![CDATA[H5页面自适应——rem]]></title>
+    <url>%2F2017%2F04%2F17%2FH5%E9%A1%B5%E9%9D%A2%E8%87%AA%E9%80%82%E5%BA%94%E2%80%94%E2%80%94rem%2F</url>
     <content type="text"><![CDATA[rem.js1234567891011/* rem.js文件内容 */(function() &#123; var html = document.documentElement; function onWindowResize() &#123; html.style.fontSize = html.getBoundingClientRect().width / 20 + 'px'; &#125; window.addEventListener('resize', onWindowResize); onWindowResize();&#125;)(); 需要注意的是在html文件的head标签中需要加入一行：1&lt;meta name="viewport" content="initial-scale=1.0,width=device-width"&gt; 指定页面宽度为设备宽度。]]></content>
       <categories>
         <category>JavaScript</category>
       </categories>
       <tags>
         <tag>JavaScript</tag>
-        <tag>自适应</tag>
+        <tag>H5</tag>
       </tags>
   </entry>
   <entry>
@@ -155,7 +214,7 @@
     <url>%2F2017%2F04%2F11%2F%E6%97%A5%E5%B8%B8%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E2%80%94%E2%80%94web-app-%E9%98%85%E8%AF%BB%E5%99%A8%2F</url>
     <content type="text"><![CDATA[base64图片优势： 减少请求（直接放在css文件里面，不需要通过URL） 加快首屏数据的显示数据缺点： 维护不方便 体积更大 CSS3制作图片 border-radius box-shadow transform HTML5 API概述DOM 节点操作QuerySelector：操作简单，性能更好，动作更快postMessage：跨域，页面通信window.performance.timing：性能监控localStorage：存储 touch事件touchdown–&gt;touchmove–&gt;touchup触摸过程中，click，mousedown，mouseup事件触发顺序是不定的。 viewport固定页面宽度1&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"&gt; 移动端性能陷阱和硬件加速 减少或者避免页面重绘（repaint）,页面回流（reflow）——减少对DOM元素的操作。 尽量缓存可以缓存的数据 用CSS3 transform代替DOM操作 不要给非static定位元素增加css动画（会成倍增加性能消耗） 适当使用硬件加速（canvas画图，transform等） 开发流程 技术选型 轻量化 维护简单 快速开发 高性能 框架or原生？ 模块化拆分]]></content>
       <categories>
-        <category>笔记</category>
+        <category>学习笔记</category>
       </categories>
       <tags>
         <tag>笔记</tag>
@@ -171,18 +230,6 @@
       </categories>
       <tags>
         <tag>JavaScript</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[电商网站前端架构]]></title>
-    <url>%2F2017%2F04%2F09%2F%E7%94%B5%E5%95%86%E7%BD%91%E7%AB%99%E5%89%8D%E7%AB%AF%E6%9E%B6%E6%9E%84%2F</url>
-    <content type="text"><![CDATA[基本认识架构和工程师都是为产品服务的。 直接使用第三方框架？ 对于实现原理的了解 性能问题 其他问题 资源框架——对市面已有的框架进行改造和升级。 释放内存 如何发布？如何快速迭代？ 架构具有通用性。 前端架构基础技术基础语言基础JavaScript，css，html学习途径：一切语言的根源w3c.org。 基本框架和类库jQuery 更方便做代码开发requirejs/seajs 模块化框架mv* framework Angular.JS 设计模式继承&amp;重用 性能优化http cache/local cache/compress/DOM render 其他Restful API desgin自动化（grunt/nodejs) 提升开发效率 代码更有效的发布 提升团队合作跨终端适配代码托管 产品设计、发布和迭代工程师技能外延。。。 数据分析和优化好的前端工程师对于数据一定是敏感的，要用产品的思维去对待项目。可以使用第三方统计工具，比如百度统计 架构组织的维度目录层面的组织好的目录组织是好架构的开始！ CSS，JS和图片要分开更有利于团队协作和管理。 页面层次组织架构组件化和设计模式层面JS中的继承和Extend继承和拷贝是JS对象的基础，因为它不像其他面向对象语言与生俱来这些功能。Extend：浅拷贝和深拷贝1234567//浅拷贝function extend(sub, sup) &#123; for (var i in sup) &#123; sub[i] = sup[i]; &#125; return sub;&#125; 深拷贝可以参考其他js库里面的extend函数。 JS继承：原型链继承参考：《你不知道的JavaScript》读书笔记（四） 划分命名空间使用闭包：问题是变量常驻内存。参考：《你不知道的JavaScript》读书笔记（一） 组件化 模块化CMD 文件按需下载AMD 依赖关系前置 前端架构实施前的思考 更合理的技术选型 需求分解，模块拆分 自动化的发布和快速迭代 优化和扩展 代码层面——Code review &amp; 代码规范 架构层面——可扩展性是否收到制约 扩展性好不好：可以评估产品需求和改动能不能快速上线。 协议层面——通过http(s)协议优化 综合——优化往往是多种技术的综合作用。 自动化 前端自动化基础（nodejs) 实例解读设计和交互图解读阶段 页面工程师：页面结构的划分，CSS的规划 前端工程师：页面API的设计，前端组件的规划 目录示例：]]></content>
-      <categories>
-        <category>前端</category>
-      </categories>
-      <tags>
-        <tag>学习</tag>
-        <tag>架构</tag>
       </tags>
   </entry>
   <entry>
@@ -209,15 +256,15 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[《css 揭秘》读书笔记（一）]]></title>
-    <url>%2F2017%2F04%2F06%2F%E3%80%8Acss-%E6%8F%AD%E7%A7%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[记录阅读《css 揭秘》一书中遇到的问题。 开始行内元素的padding和margin：可见，行内元素的padding在任何方向上都是有效的，而margin只有在左右有效。但是有一个问题就是，看起来span的高度被撑高了，但是却越界了了。设置line-height可以改变这种现象，或者直接设置display为inline-block。可以看到我在span标签的样式中定义了vertical-align:top，因为span的默认对齐方式应该是baseline，会导致父容器div不在同一水平线上。以后有时间再仔细研究吧。 背景与边框半透明边框正常情况下background和border设置的颜色值会重叠，可以使用background-clip:padding-box来解决这个问题。 多重边框box-shadow方案123456div &#123; background:#55f; box-shadow: 0 0 0 10px .#665, 0 0 0 15px deeppink, 0 2px 5px 15px rgba(0,0,0,.6);&#125; 需要注意的是投影不会影响布局，也不会受到box-sizing的影响。需要通过内边距或者外边距来额外模拟出边框所需要占据的空间。 outline方案当你只需要两层边框，outline更灵活，可以产生虚线边框效果：123456div &#123; background: darkgray; border-radius: 5px; outline: dashed white 1px; outline-offset: -5px;&#125; 只适用于双层“边框”的场景； 边框不一定会贴合border-radius产生的圆角。 灵活的背景定位难题：将背景图片定位到容器右下角background-position12345div &#123; background: url(code-pirate.svg) no-repeat bottom right #58a; /* 针对不支持background-position浏览器的回退方案 */ background-position: right 20px bottom 10px;&#125; background-origin方案默认情况下，background-position是以padding box为准的，这样边框才不会遮住背景图片。现在我们想让背景图片和content box对齐，只需要修改background-origin为content-box即可。12345div &#123; padding: 10px; background: url(code-pirate.svg) no-repeat bottom right #58a; background-origin: content-box;&#125; calc()方案1234div &#123; background: url(code-pirate.svg) no-repeat; background-position: calc(100% - 20px) calc(100% - 10px);&#125; 边框内圆角1234567div &#123; background: tan; border-radius: .8rem; padding: 1em; box-shadow: 0 0 0 .4em #655; outline: .6em solid #655;&#125; I have a noce subtle inner rounding, don’t I look pretty? 有一个限制：为了让这个效果得到达成，扩张半径需要比描边的宽度值小，但它同时又要比(√2-1)r大（这里的r表示border-radius).这意味着如果描边的宽度比(√2-1)r小，那我们是不能用这个方法达到效果的。(√2-1≈0.34)。 条纹背景利用垂直线性渐变，把两个色标拉近，颜色过渡区域就会减少，二者重合就会表现为条纹：123456789div &#123; background: linear-gradient(#fb3, #58a); /* 默认情况 */&#125;div &#123; background: linear-gradient(#fb3 40%, #58a 60%); /* 拉近一些 */&#125;div &#123; background: linear-gradient(#fb3 50%, #58a 50%); /* 重合 */&#125; 效果如下： 默认背景是重复平铺的：1234div &#123; background: linear-gradient(#fb3 50%, #58a 50%); background-size: 100% 20px;&#125; 捷径： 如果某个色标的位置值比整个列表中在它之前的色标的位置值都要小，则该色标的位置值会被设置为它前面所有色标位置值的最大值。 于是，可以这样：1234div &#123; background: linear-gradient(#fb3 33.3%, #58a 0, #58a 66.6%, yellowgreen 0); background-size: 100% 30px;&#125; 垂直条纹12345div &#123; background: linear-gradient(to right,/*或 90deg*/ #fb3 50%, #58a 0); background-size: 20px 100%;&#125; 斜向条纹1234div &#123; background: linear-gradient( 45deg, #fb3 50%, #58a 0); background-size: 20px 20px;&#125; 貌似不对劲！1234567div &#123; background: linear-gradient( 45deg, #fb3 25%, #58a 0, #58a 50%, #fb3 0, #fb3 75%, #58a 0); background-size: 20px 20px;&#125; 这下就好了！需要注意的是，条纹宽度和background-size的数学关系，条纹宽度为a，background-size为b，则b = 2√2 * a ≈ 2.82 * a。 更好的斜向条纹我们想要改变角度了！当然有更好的方法：repeating-linear-gradient()和repeating-radial-gradient()于是乎：1234div &#123; background: repeating-linear-gradient( 60deg, #fb3, #fb3 15px, #58a 0, #58a 30px);&#125; 需要注意的是，在渐变色标中指定长度，而不是background-size，这些长度是直接在渐变轴上进行度量的，直接代表了条纹自身的长度。 灵活的同色系条纹通常我们需要这样指定条纹：1234div &#123; background: repeating-linear-gradient( 30deg, #79b, #79b 15px, #58a 0, #58a 30px);&#125; 效果如下： 还有一种更好的方法：不在为每种条纹单独指定颜色，而是把最深的颜色指定为背景色，同事把半透明白色的条纹叠加在背景色之上来得到浅色条纹：1234567div &#123; background: #58a; background-image: repeating-linear-gradient( 30deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .1) 15px, transparent 0, transparent 30px);&#125; 这样每次就只需要修改一个地方就可以了，也起到了回退作用。]]></content>
+    <title><![CDATA[《CSS 揭秘》读书笔记（一）]]></title>
+    <url>%2F2017%2F04%2F06%2F%E3%80%8ACSS-%E6%8F%AD%E7%A7%98%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89%2F</url>
+    <content type="text"><![CDATA[记录阅读《CSS 揭秘》一书中遇到的问题。 开始行内元素的padding和margin：可见，行内元素的padding在任何方向上都是有效的，而margin只有在左右有效。但是有一个问题就是，看起来span的高度被撑高了，但是却越界了了。设置line-height可以改变这种现象，或者直接设置display为inline-block。可以看到我在span标签的样式中定义了vertical-align:top，因为span的默认对齐方式应该是baseline，会导致父容器div不在同一水平线上。以后有时间再仔细研究吧。 背景与边框半透明边框正常情况下background和border设置的颜色值会重叠，可以使用background-clip:padding-box来解决这个问题。 多重边框box-shadow方案123456div &#123; background:#55f; box-shadow: 0 0 0 10px .#665, 0 0 0 15px deeppink, 0 2px 5px 15px rgba(0,0,0,.6);&#125; 需要注意的是投影不会影响布局，也不会受到box-sizing的影响。需要通过内边距或者外边距来额外模拟出边框所需要占据的空间。 outline方案当你只需要两层边框，outline更灵活，可以产生虚线边框效果：123456div &#123; background: darkgray; border-radius: 5px; outline: dashed white 1px; outline-offset: -5px;&#125; 只适用于双层“边框”的场景； 边框不一定会贴合border-radius产生的圆角。 灵活的背景定位难题：将背景图片定位到容器右下角background-position12345div &#123; background: url(code-pirate.svg) no-repeat bottom right #58a; /* 针对不支持background-position浏览器的回退方案 */ background-position: right 20px bottom 10px;&#125; background-origin方案默认情况下，background-position是以padding box为准的，这样边框才不会遮住背景图片。现在我们想让背景图片和content box对齐，只需要修改background-origin为content-box即可。12345div &#123; padding: 10px; background: url(code-pirate.svg) no-repeat bottom right #58a; background-origin: content-box;&#125; calc()方案1234div &#123; background: url(code-pirate.svg) no-repeat; background-position: calc(100% - 20px) calc(100% - 10px);&#125; 边框内圆角1234567div &#123; background: tan; border-radius: .8rem; padding: 1em; box-shadow: 0 0 0 .4em #655; outline: .6em solid #655;&#125; I have a noce subtle inner rounding, don’t I look pretty? 有一个限制：为了让这个效果得到达成，扩张半径需要比描边的宽度值小，但它同时又要比(√2-1)r大（这里的r表示border-radius).这意味着如果描边的宽度比(√2-1)r小，那我们是不能用这个方法达到效果的。(√2-1≈0.34)。 条纹背景利用垂直线性渐变，把两个色标拉近，颜色过渡区域就会减少，二者重合就会表现为条纹：123456789div &#123; background: linear-gradient(#fb3, #58a); /* 默认情况 */&#125;div &#123; background: linear-gradient(#fb3 40%, #58a 60%); /* 拉近一些 */&#125;div &#123; background: linear-gradient(#fb3 50%, #58a 50%); /* 重合 */&#125; 效果如下： 默认背景是重复平铺的：1234div &#123; background: linear-gradient(#fb3 50%, #58a 50%); background-size: 100% 20px;&#125; 捷径： 如果某个色标的位置值比整个列表中在它之前的色标的位置值都要小，则该色标的位置值会被设置为它前面所有色标位置值的最大值。 于是，可以这样：1234div &#123; background: linear-gradient(#fb3 33.3%, #58a 0, #58a 66.6%, yellowgreen 0); background-size: 100% 30px;&#125; 垂直条纹12345div &#123; background: linear-gradient(to right,/*或 90deg*/ #fb3 50%, #58a 0); background-size: 20px 100%;&#125; 斜向条纹1234div &#123; background: linear-gradient( 45deg, #fb3 50%, #58a 0); background-size: 20px 20px;&#125; 貌似不对劲！1234567div &#123; background: linear-gradient( 45deg, #fb3 25%, #58a 0, #58a 50%, #fb3 0, #fb3 75%, #58a 0); background-size: 20px 20px;&#125; 这下就好了！需要注意的是，条纹宽度和background-size的数学关系，条纹宽度为a，background-size为b，则b = 2√2 * a ≈ 2.82 * a。 更好的斜向条纹我们想要改变角度了！当然有更好的方法：repeating-linear-gradient()和repeating-radial-gradient()于是乎：1234div &#123; background: repeating-linear-gradient( 60deg, #fb3, #fb3 15px, #58a 0, #58a 30px);&#125; 需要注意的是，在渐变色标中指定长度，而不是background-size，这些长度是直接在渐变轴上进行度量的，直接代表了条纹自身的长度。 灵活的同色系条纹通常我们需要这样指定条纹：1234div &#123; background: repeating-linear-gradient( 30deg, #79b, #79b 15px, #58a 0, #58a 30px);&#125; 效果如下： 还有一种更好的方法：不在为每种条纹单独指定颜色，而是把最深的颜色指定为背景色，同事把半透明白色的条纹叠加在背景色之上来得到浅色条纹：1234567div &#123; background: #58a; background-image: repeating-linear-gradient( 30deg, hsla(0, 0%, 100%, .1), hsla(0, 0%, 100%, .1) 15px, transparent 0, transparent 30px);&#125; 这样每次就只需要修改一个地方就可以了，也起到了回退作用。]]></content>
       <categories>
         <category>读书笔记</category>
       </categories>
       <tags>
+        <tag>CSS</tag>
         <tag>读书笔记</tag>
-        <tag>css</tag>
       </tags>
   </entry>
   <entry>
@@ -273,7 +320,7 @@
     <url>%2F2017%2F03%2F16%2Fjade%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[安装123$ npm install pug$ npm install pug-cli -g$ pug --help 语法12345678910111213141516doctype htmlhtml(lang=&quot;en&quot;) head title= pageTitle script(type=&apos;text/javascript&apos;). if (foo) bar(1 + 5) body h1 Pug - node template engine #container.col if youAreUsingPug p You are amazing else p Get on it! p. Pug is a terse and simple templating language with a strong focus on performance and powerful features.]]></content>
       <categories>
-        <category>笔记</category>
+        <category>学习笔记</category>
       </categories>
       <tags>
         <tag>前端</tag>
@@ -285,7 +332,7 @@
     <url>%2F2017%2F03%2F14%2Fvue-js%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[学习了慕课网课程Vue.js高仿饿了么外卖App之后的整理。 method和计算属性的区别我们可以通过调用表达式中的method来达到和计算属性同样的效果。对于最终的结果，两种方式确实是相同的。然而，不同的是计算属性是基于它的依赖缓存。计算属性只有在它的相关依赖发生改变时才会重新取值。这就意味着只要 message 没有发生改变，多次访问 reversedMessage 计算属性会立即返回之前的计算结果，而不必再次执行函数。相比而言，每当重新渲染的时候，method调用总会执行函数。 watchVue 提供一个更通用的方法通过watch选项，来响应数据的变化。当你想要在数据变化响应时，执行异步操作或昂贵操作时，这是很有用的。使用watch选项允许我们执行异步操作（访问一个 API），限制我们执行该操作的频率，并在我们得到最终结果前，设置中间状态。这是计算属性无法做到的。 v-if vs. v-showv-if是真实的条件渲染，因为它会确保条件块在切换当中适当地销毁与重建条件块内的事件监听器和子组件。v-if也是惰性的：如果在初始渲染时条件为假，则什么也不做——在条件第一次变为真时才开始局部编译（编译会被缓存起来）。相比之下，v-show简单得多——元素始终被编译并保留，只是简单地基于 CSS 切换。一般来说，v-if有更高的切换消耗而v-show有更高的初始渲染消耗。因此，如果需要频繁切换使用v-show较好，如果在运行时条件不大可能改变则使用v-if较好。 methods只有纯粹的数据逻辑，而不是去处理DOM事件细节 事件修饰符 123456789101112&lt;!-- 阻止单击事件冒泡 --&gt;&lt;a v-on:click.stop="doThis"&gt;&lt;/a&gt;&lt;!-- 提交事件不再重载页面 --&gt;&lt;form v-on:submit.prevent="onSubmit"&gt;&lt;/form&gt;&lt;!-- 修饰符可以串联 --&gt;&lt;a v-on:click.stop.prevent="doThat"&gt;&lt;/a&gt;&lt;!-- 只有修饰符 --&gt;&lt;form v-on:submit.prevent&gt;&lt;/form&gt;&lt;!-- 添加事件侦听器时使用事件捕获模式 --&gt;&lt;div v-on:click.capture="doThis"&gt;...&lt;/div&gt;&lt;!-- 只当事件在该元素本身（而不是子元素）触发时触发回调 --&gt;&lt;div v-on:click.self="doThat"&gt;...&lt;/div&gt; 使用 v-on 有几个好处：– 扫一眼 HTML 模板便能轻松定位在 JavaScript 代码里对应的方法。– 因为你无须在 JavaScript 里手动绑定事件，你的 ViewModel 代码可以是非常纯粹的逻辑，和 DOM 完全解耦，更易于测试。– 当一个 ViewModel 被销毁时，所有的事件处理器都会自动被删除。你无须担心如何自己清理它们。 组件组件作用域简单地说是：父组件模板的内容在父组件作用域内编译；子组件模板的内容在子组件作用域内编译。]]></content>
       <categories>
-        <category>笔记</category>
+        <category>学习笔记</category>
       </categories>
       <tags>
         <tag>前端</tag>
@@ -314,7 +361,7 @@
       </categories>
       <tags>
         <tag>前端</tag>
-        <tag>正则</tag>
+        <tag>正则表达式</tag>
       </tags>
   </entry>
   <entry>
