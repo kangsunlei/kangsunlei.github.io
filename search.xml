@@ -15,7 +15,7 @@
   <entry>
     <title><![CDATA[React 学习笔记（二）]]></title>
     <url>%2F2019%2F04%2F06%2FReact-%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89%2F</url>
-    <content type="text"><![CDATA[看了慕课网双流的视频教程，记录了一些React笔记。 组件化 封装（视图、数据、变化逻辑） 复用（props） JSX 语法糖 开发环境下将JSX编译成JS 降低学习成本和编码工作量 独立的标准，可以用在其他地方（例如：Preact） 核心函数：React.createElement 1234567891011121314151617import Test from './Test'var jsx = ( &lt;div&gt; &lt;Test/&gt; &lt;input type="text" value=&#123;this.state.value&#125;/&gt; &lt;ul&gt; &#123; list.map(item =&gt; &#123; return ( &lt;li&gt;&#123;item&#125;&lt;/li&gt; ) &#125;) &#125; &lt;/ul&gt; &lt;/div&gt;) 通过Babel转换后 12345678910111213141516171819import Test from './Test';var jsx = React.createElement( "div", null, React.createElement(Test, null), React.createElement("input", &#123; type: "text", value: this.state.value &#125;), React.createElement( "ul", null, list.map(item =&gt; &#123; return React.createElement( "li", null, item ); &#125;) )); 自定义组件的解析处理组件（自定义标签）的时候，传入的第一个参数是构造函数，而不是字符串。 需要组件声明render函数 实际上是先根据props执行组件的render函数，返回一个vnode 可以理解为递归 vdom snabbdom h，patch jsx -> html 的过程中需要vdom 初次渲染 ReactDOM.render(\, container)，触发patch(container, vnode) re-render - setState，触发patch(vnode, newVnode) setState 异步 出于性能考虑，不能每次更改state都重新渲染 即使每次都重新渲染，用户也看不到，因为js执行的时候，dom会卡顿 vue修改属性也是异步的 过程： 每个组件实例，都有renderComponent方法(extends Component) 执行renderComponent会重新执行实例的render render返回newVnode，然后拿到preVnode 执行patch(preVnode, newVnode) Vue &amp; React vue-本质是MVVM框架，由MVC发展而来 react-本质是前端组件化框架，由后端框架发展而来 vue-使用模板 react-JSX]]></content>
+    <content type="text"><![CDATA[看了慕课网双流的视频教程，记录了一些React笔记。 组件化 封装（视图、数据、变化逻辑） 复用（props） JSX 语法糖 开发环境下将JSX编译成JS 降低学习成本和编码工作量 独立的标准，可以用在其他地方（例如：Preact） 核心函数：React.createElement 1234567891011121314151617import Test from './Test'var jsx = ( &lt;div&gt; &lt;Test/&gt; &lt;input type="text" value=&#123;this.state.value&#125;/&gt; &lt;ul&gt; &#123; list.map(item =&gt; &#123; return ( &lt;li&gt;&#123;item&#125;&lt;/li&gt; ) &#125;) &#125; &lt;/ul&gt; &lt;/div&gt;) 通过Babel转换后 12345678910111213141516171819import Test from './Test';var jsx = React.createElement( "div", null, React.createElement(Test, null), React.createElement("input", &#123; type: "text", value: this.state.value &#125;), React.createElement( "ul", null, list.map(item =&gt; &#123; return React.createElement( "li", null, item ); &#125;) )); 自定义组件的解析处理组件（自定义标签）的时候，传入的第一个参数是构造函数，而不是字符串。 需要组件声明render函数 实际上是先根据props执行组件的render函数，返回一个vnode 可以理解为递归 vdom snabbdom h，patch jsx -> html 的过程中需要vdom 初次渲染 ReactDOM.render(\&lt;App />, container)，触发patch(container, vnode) re-render - setState，触发patch(vnode, newVnode) setState 异步 出于性能考虑，不能每次更改state都重新渲染 即使每次都重新渲染，用户也看不到，因为js执行的时候，dom会卡顿 vue修改属性也是异步的 过程： 每个组件实例，都有renderComponent方法(extends Component) 执行renderComponent会重新执行实例的render render返回newVnode，然后拿到preVnode 执行patch(preVnode, newVnode) Vue &amp; React vue-本质是MVVM框架，由MVC发展而来 react-本质是前端组件化框架，由后端框架发展而来 vue-使用模板 react-JSX]]></content>
       <categories>
         <category>React</category>
       </categories>
@@ -263,8 +263,8 @@
         <category>读书笔记</category>
       </categories>
       <tags>
-        <tag>CSS</tag>
         <tag>读书笔记</tag>
+        <tag>CSS</tag>
       </tags>
   </entry>
   <entry>
