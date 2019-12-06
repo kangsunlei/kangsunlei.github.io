@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://kangsunlei.site/2019/09/21/js-%E5%AE%9E%E7%8E%B0%E6%96%87%E6%A1%A3%E6%B0%B4%E5%8D%B0%E6%95%88%E6%9E%9C/</loc>
+    <lastmod>2019-12-06</lastmod>
+  </url>  <url>
     <loc>http://kangsunlei.site/2016/03/14/web%E5%85%A8%E6%A0%88%E5%B7%A5%E7%A8%8B%E5%B8%88%E7%9A%84%E8%87%AA%E6%88%91%E4%BF%AE%E5%85%BB/</loc>
     <lastmod>2019-08-11</lastmod>
   </url>  <url>
@@ -9,9 +12,6 @@
   </url>  <url>
     <loc>http://kangsunlei.site/2019/07/29/JavaScript-%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1/</loc>
     <lastmod>2019-07-29</lastmod>
-  </url>  <url>
-    <loc>http://kangsunlei.site/2019/04/21/js-%E5%AE%9E%E7%8E%B0%E6%96%87%E6%A1%A3%E6%B0%B4%E5%8D%B0%E6%95%88%E6%9E%9C/</loc>
-    <lastmod>2019-04-21</lastmod>
   </url>  <url>
     <loc>http://kangsunlei.site/2017/04/07/%E3%80%90%E8%BD%AC%E3%80%91%E5%AD%A6%E4%B9%A0CSS%E5%B8%83%E5%B1%80/</loc>
     <lastmod>2019-04-21</lastmod>
@@ -88,19 +88,19 @@
     <loc>http://kangsunlei.site/2017/04/14/%E6%9F%90%E6%AC%A1%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93/</loc>
     <lastmod>2017-12-10</lastmod>
   </url>  <url>
-    <loc>http://kangsunlei.site/2016/03/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>http://kangsunlei.site/2017/04/15/%E5%AD%A6%E4%B9%A0JavaScript%E2%80%94%E2%80%94DOM/</loc>
     <lastmod>2017-12-10</lastmod>
   </url>  <url>
     <loc>http://kangsunlei.site/2017/04/11/%E5%AD%A6%E4%B9%A0JavaScript%E2%80%94%E2%80%94%E5%8F%98%E9%87%8F%E3%80%81%E4%BD%9C%E7%94%A8%E5%9F%9F%E5%92%8C%E5%86%85%E5%AD%98%E9%97%AE%E9%A2%98/</loc>
     <lastmod>2017-12-10</lastmod>
   </url>  <url>
-    <loc>http://kangsunlei.site/2017/04/15/%E5%AD%A6%E4%B9%A0JavaScript%E2%80%94%E2%80%94DOM/</loc>
-    <lastmod>2017-12-10</lastmod>
-  </url>  <url>
-    <loc>http://kangsunlei.site/2017/04/06/%E3%80%8A%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/</loc>
+    <loc>http://kangsunlei.site/2016/03/09/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2017-12-10</lastmod>
   </url>  <url>
     <loc>http://kangsunlei.site/2017/04/05/%E3%80%8A%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
+    <lastmod>2017-12-10</lastmod>
+  </url>  <url>
+    <loc>http://kangsunlei.site/2017/04/06/%E3%80%8A%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%89%EF%BC%89/</loc>
     <lastmod>2017-12-10</lastmod>
   </url>  <url>
     <loc>http://kangsunlei.site/2017/04/04/%E3%80%8A%E4%BD%A0%E4%B8%8D%E7%9F%A5%E9%81%93%E7%9A%84JavaScript%E3%80%8B%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/</loc>

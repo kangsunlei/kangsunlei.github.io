@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[JavaScript 包装对象]]></title>
-    <url>%2F2019%2F07%2F29%2FJavaScript-%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1%2F</url>
-    <content type="text"><![CDATA[七种数据类型 String Number Boolean Null Undefined Symbol Object Object 为引用类型，其余为原始类型。 包装对象原始类型没有属性和方法。但是我们经常会这么写：12345var n = 123;n.toString(); // "123"var str = '123';str.split(''); // ["1", "2", "3"] 三种原始类型的值——数值、字符串、布尔值——在一定条件下，也会自动转为对象，也就是原始类型的 “包装对象”。 原始类型的值，可以自动当作包装对象调用，即调用各种包装对象的属性和方法。这时，JavaScript 引擎会自动将原始类型的值转为包装对象实例，在使用后立刻销毁实例。]]></content>
-  </entry>
-  <entry>
     <title><![CDATA[js 实现文档水印效果]]></title>
-    <url>%2F2019%2F04%2F21%2Fjs-%E5%AE%9E%E7%8E%B0%E6%96%87%E6%A1%A3%E6%B0%B4%E5%8D%B0%E6%95%88%E6%9E%9C%2F</url>
+    <url>%2F2019%2F09%2F21%2Fjs-%E5%AE%9E%E7%8E%B0%E6%96%87%E6%A1%A3%E6%B0%B4%E5%8D%B0%E6%95%88%E6%9E%9C%2F</url>
     <content type="text"><![CDATA[用js实现一个水印效果。效果图如下： 之前在网上看到一个思路，先用canvas画一个小的水印，然后再在一个大的画布上重复平铺之前画好的canvas。实际做出来之后发现如果水印区域过大的话，平铺canvas需要耗费巨大的性能，甚至会导致页面崩溃。所以改用背景图的形式展现，只需要将生成的canvas到处为base64的数据，并赋给水印区域的背景属性，同时设置background-repeat: repeat;即可。 接下来我们一步一步的实现我们想要的效果。 HTML由于水印一般为当前用户的名字或者邮箱，所以需要实时计算小水印的宽高。最准确的方式当然是直接放到页面里面，再用js去取。初始html源代码如下： 1234567&lt;body&gt; &lt;!-- 用来计算一块水印宽高的元素 --&gt; &lt;div id="watermark-text"&gt;我是一个水印&lt;/div&gt; &lt;!-- 水印区域 --&gt; &lt;div class="container"&gt;&lt;/div&gt;&lt;/body&gt; CSS123456789101112131415161718192021222324252627/* 单个水印块 需要设置好字体和字号，不需要出现在可视区域 */#watermark-text &#123; font-family: 'Microsoft YaHei'; position: absolute; top: -1000px; display: inline-block; font-size: 20px; line-height: 20px; padding: 10px;&#125;.container &#123; width: 1000px; height: 500px; border: 1px solid blue; position: relative;&#125;/* 背景图元素，贴合主体显示区域，并设置较高的层级 */.repeat-watermark &#123; position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index: 999; background-repeat: repeat;&#125; JS水印倾斜角度为30度。示意图如下： 初始位置如下 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455565758596061626364656667686970var Watermark = function(containerCls) &#123; // canvas 容器 var container = document.querySelector(containerCls); // 计算水印块大小 var markTextEl = document.querySelector('#watermark-text'); var watermarkText = markTextEl.innerText; // 水印旋转 -30 度，由高中几何知识，得出水印宽高 // 见上图 var markWidth = markTextEl.clientWidth * 0.87 + markTextEl.clientHeight * 0.5; var markHeight = markTextEl.clientWidth * 0.5 + markTextEl.clientHeight * 0.87; // 根据上传计算的结果创建 canvas 标签 var canvasEl1 = document.createElement('canvas'); canvasEl1.setAttribute('class', 'watermark'); canvasEl1.setAttribute('width', markWidth); canvasEl1.setAttribute('height', markHeight); canvasEl1.setAttribute('style', 'display: none'); // 插入文档 container.appendChild(canvasEl1); // 设置背景图元素 var imgBgEl = document.createElement('div'); imgBgEl.setAttribute('class', 'repeat-watermark'); container.appendChild(imgBgEl); this.opt = &#123; container: container, markWidth: markWidth || 160, markHeight: markHeight || 100, watermark: watermarkText, docWidth: container.clientWidth, docHeight: container.clientHeight, fontStyle: "20px Microsoft YaHei", //水印字体设置 rotateAngle: -30 * Math.PI / 180, //水印字体倾斜角度设置 fontColor: "rgba(220, 220, 220, 127)", //水印字体颜色设置 // 初始位置见上图 firstLinePositionX: -(markHeight - markTextEl.clientHeight * 0.87) * 0.5, //canvas第一行文字起始X坐标 firstLinePositionY: (markHeight - markTextEl.clientHeight * 0.87) * 0.87 + markTextEl.clientHeight //Y &#125;; this.draw(this.opt.docWidth, this.opt.docHeight);&#125;;Watermark.prototype = &#123; draw: function(docWidth, docHeight) &#123; var cw = this.opt.container.querySelector('.watermark'); var imgBg = this.opt.container.querySelector('.repeat-watermark'); var ctx = cw.getContext("2d"); //清除小画布 ctx.clearRect(0, 0, this.opt.markWidth, this.opt.markHeight); // 设置文字样式 ctx.font = this.opt.fontStyle; ctx.rotate(this.opt.rotateAngle); ctx.fillStyle = this.opt.fontColor; ctx.fillText(this.opt.watermark, this.opt.firstLinePositionX, this.opt.firstLinePositionY); //坐标系还原 ctx.rotate(-this.opt.rotateAngle); // 输出为base64数据 var data = cw.toDataURL('image/png', .1); imgBg.style.background = "url(" + data + ")" &#125;&#125;;]]></content>
       <categories>
         <category>Javascript</category>
@@ -15,6 +10,11 @@
       <tags>
         <tag>JavaScript</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[JavaScript 包装对象]]></title>
+    <url>%2F2019%2F07%2F29%2FJavaScript-%E5%8C%85%E8%A3%85%E5%AF%B9%E8%B1%A1%2F</url>
+    <content type="text"><![CDATA[七种数据类型 String Number Boolean Null Undefined Symbol Object Object 为引用类型，其余为原始类型。 包装对象原始类型没有属性和方法。但是我们经常会这么写：12345var n = 123;n.toString(); // "123"var str = '123';str.split(''); // ["1", "2", "3"] 三种原始类型的值——数值、字符串、布尔值——在一定条件下，也会自动转为对象，也就是原始类型的 “包装对象”。 原始类型的值，可以自动当作包装对象调用，即调用各种包装对象的属性和方法。这时，JavaScript 引擎会自动将原始类型的值转为包装对象实例，在使用后立刻销毁实例。]]></content>
   </entry>
   <entry>
     <title><![CDATA[React 学习笔记-事件系统]]></title>
