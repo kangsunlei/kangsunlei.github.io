@@ -1,6 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[如何控制音视频文件链接点击后是播放还是下载]]></title>
+    <url>%2F2019%2F12%2F24%2F%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E9%9F%B3%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E7%82%B9%E5%87%BB%E5%90%8E%E6%98%AF%E6%92%AD%E6%94%BE%E8%BF%98%E6%98%AF%E4%B8%8B%E8%BD%BD%2F</url>
+    <content type="text"><![CDATA[在网页上点击一个音视频的链接之后，有两种表现，一种是直接浏览器内播放，一种是下载文件。造成这两种现象的原因是服务端响应头中Content-Disposition的不同。 在HTTP场景中，第一个参数或者是inline（默认值，表示回复中的消息体会以页面的一部分或者整个页面的形式展示），或者是attachment（意味着消息体应该被下载到本地；大多数浏览器会呈现一个“保存为”的对话框，将filename的值预填为下载后的文件名，假如它存在的话）。 123Content-Disposition: inlineContent-Disposition: attachmentContent-Disposition: attachment; filename="filename.jpg"]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[实时获取文件下载的速度]]></title>
+    <url>%2F2019%2F12%2F24%2F%E5%AE%9E%E6%97%B6%E8%8E%B7%E5%8F%96%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD%E7%9A%84%E9%80%9F%E5%BA%A6%2F</url>
+    <content type="text"><![CDATA[以Chrome为例，在网页下载文件的时候，一般情况下都是点击一个链接，然后浏览器底部就会出现一条下载的任务。但是有些产品的页面为了用户有更完整的体验，会在页面内实现一个实时的进度条。具体做法就是利用XMLHttpRequest对象的onprogress回调来实现。 完整代码如下： 1234567891011121314151617181920212223242526272829303132const downloadURL = (url) =&gt; &#123; const xmlhttp = new XMLHttpRequest(); xmlhttp.open('GET', url, true); xmlhttp.responseType = 'blob'; xmlhttp.onprogress = function (event) &#123; // 输出进度 console.log(event.loaded / event.total); &#125;; xmlhttp.send(); xmlhttp.onreadystatechange = function () &#123; if (xmlhttp.readyState == 4 &amp;&amp; xmlhttp.status == 200) &#123; //需要知道下载的文件格式 if (msie) &#123; navigator.msSaveOrOpenBlob(blob, name); return; &#125; var blob = new Blob([xmlhttp.response], &#123;type: 'image/png'&#125;); var url1 = URL.createObjectURL(blob); let dllink = document.getElementById('dllink'); if (dllink === null) &#123; dllink = document.createElement('a'); dllink.id = 'dllink'; // 需要知道文件的名字 dllink.download = 'name.bmp'; dllink.href = url1; document.body.appendChild(dllink); &#125; // 触发点击事件 dllink.click(); &#125; &#125;;&#125; 需要注意的是：因为下载过程中文件是在内存中的，Blob的大小不能超过500MB。]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[再看js继承]]></title>
     <url>%2F2019%2F12%2F06%2F%E5%86%8D%E7%9C%8Bjs%E7%BB%A7%E6%89%BF%2F</url>
     <content type="text"><![CDATA[最近在复习JS知识，看到继承的时候，回去翻了一下《高级JavaScript程序设计》，顺便整理了一下书中的知识点，方便自己理解。 基于原型 1234567891011121314151617function Parent() &#123; this.name = 'tom';&#125;Parent.prototype.sayName = function() &#123; return this.name;&#125;function Child() &#123; this.name = 'jack';&#125;Child.prototype = new Parent();var child = new Child();child.sayName() // jack 父类里面的引用类型的属性会被子类的实例修改，影响到其他子类实例 子类实例化的时候无法向父类传递参数 基于构造函数 123function Child() &#123; Parent.call(this)&#125; 父类原型被丢失 组合继承 123456function Child() &#123; // 继承属性 Parent.call(this)&#125;Child.prototype = new Parent(); // 继承方法 会调用两次父类构造函数 原型式继承 123456789101112function object(o)&#123; function F()&#123;&#125; F.prototype = o; return new F();&#125;var person = &#123; name: "Nicholas", friends: ["Shelby", "Court", "Van"]&#125;;var anotherPerson = object(person); 可以理解为 Object.create() 借助原型可以基于已有的对象创建新对象。 从本质上讲，object()对传入其中的对象执行了一次浅复制 寄生式继承 创建一个仅用于封装继承过程的函数，该函数在内部以某种方式来增强对象，最后再像真地是它做了所有工作一样返回对象。 123456789101112131415function createAnother(original)&#123; var clone = object(original); //通过调用函数创建一个新对象 clone.sayHi = function()&#123; //以某种方式来增强这个对象 alert("hi"); &#125;; return clone; //返回这个对象&#125;var person = &#123; name: "Nicholas", friends: ["Shelby", "Court", "Van"]&#125;;var anotherPerson = createAnother(person);anotherPerson.sayHi(); //"hi" 使用寄生式继承来为对象添加函数，会由于不能做到函数复用而降低效率；这一点与构造函数模式类似。 寄生组合式继承 即通过借用构造函数来继承属性，通过原型链的混成形式来继承方法。 123456789101112131415161718192021222324function inheritPrototype(Child, Parent)&#123; var prototype = object(Parent.prototype); //创建对象 prototype.constructor = Child; //增强对象 Child.prototype = prototype; //指定对象&#125;function Parent(name)&#123; this.name = name;&#125;Parent.prototype.sayName = function()&#123; alert(this.name);&#125;;function Child(name, age)&#123; Parent.call(this, name); // 构造函数继承属性 this.age = age;&#125;inheritPrototype(Child, Parent); // 继承原型上的方法Child.prototype.sayAge = function()&#123; alert(this.age);&#125;; 第一步是创建超类型原型的一个副本。 第二步是为创建的副本添加constructor属性，从而弥补因重写原型而失去的默认的constructor属性。 最后一步，将新创建的对象（即副本）赋值给子类型的原型。]]></content>
