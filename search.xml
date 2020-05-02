@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[JS深拷贝之cloneSymbol]]></title>
+    <url>%2F2020%2F05%2F02%2FJS%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B9%8BcloneSymbol%2F</url>
+    <content type="text"><![CDATA[代码很简单：123function cloneSymbol(target) &#123; return Object(Object.prototype.valueOf.call(target));&#125; 简单回顾一下Object函数： MDN中的介绍如下： Object 构造函数为给定值创建一个对象包装器。如果给定值是 null 或 undefined，将会创建并返回一个空对象，否则，将返回一个与给定值对应类型的对象。当以非构造函数形式被调用时，Object 等同于 new Object()。 Object(123) 和 new Number(123) 的结果在 Chrome 中的表现如下： 由于 Symbol 不能通过 new 的方式调用，所以采用了最上面的那种形式。]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[如何控制音视频文件链接点击后是播放还是下载]]></title>
     <url>%2F2019%2F12%2F24%2F%E5%A6%82%E4%BD%95%E6%8E%A7%E5%88%B6%E9%9F%B3%E8%A7%86%E9%A2%91%E6%96%87%E4%BB%B6%E9%93%BE%E6%8E%A5%E7%82%B9%E5%87%BB%E5%90%8E%E6%98%AF%E6%92%AD%E6%94%BE%E8%BF%98%E6%98%AF%E4%B8%8B%E8%BD%BD%2F</url>
     <content type="text"><![CDATA[在网页上点击一个音视频的链接之后，有两种表现，一种是直接浏览器内播放，一种是下载文件。造成这两种现象的原因是服务端响应头中Content-Disposition的不同。 在HTTP场景中，第一个参数或者是inline（默认值，表示回复中的消息体会以页面的一部分或者整个页面的形式展示），或者是attachment（意味着消息体应该被下载到本地；大多数浏览器会呈现一个“保存为”的对话框，将filename的值预填为下载后的文件名，假如它存在的话）。 123Content-Disposition: inlineContent-Disposition: attachmentContent-Disposition: attachment; filename="filename.jpg"]]></content>
