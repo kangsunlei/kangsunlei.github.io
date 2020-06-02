@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[js 导出表格]]></title>
+    <url>%2F2020%2F06%2F02%2Fjs-%E5%AF%BC%E5%87%BA%E8%A1%A8%E6%A0%BC%2F</url>
+    <content type="text"><![CDATA[导出为excel 将原始数据渲染为 table 标签 导出 12345678var html = document.querySelecor('#export-table').outerHTML;// 实例化一个 Blob 对象，其构造函数的第一个参数是包含文件内容的数组，第二个参数是包含文件类型属性的对象var blob = new Blob([html], &#123; type: 'application/vnd.ms-excel' &#125;);var a = document.querySelecor('#export-btn');// 利用 URL.createObjectURL() 方法为a元素生成 blob URLa.href = URL.createObjectURL(blob);// 设置文件名，目前只有 Chrome 和 FireFox 支持此属性a.download = "导出.xls";]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[JS深拷贝之cloneSymbol]]></title>
     <url>%2F2020%2F05%2F02%2FJS%E6%B7%B1%E6%8B%B7%E8%B4%9D%E4%B9%8BcloneSymbol%2F</url>
     <content type="text"><![CDATA[代码很简单：123function cloneSymbol(target) &#123; return Object(Object.prototype.valueOf.call(target));&#125; 简单回顾一下Object函数： MDN中的介绍如下： Object 构造函数为给定值创建一个对象包装器。如果给定值是 null 或 undefined，将会创建并返回一个空对象，否则，将返回一个与给定值对应类型的对象。当以非构造函数形式被调用时，Object 等同于 new Object()。 Object(123) 和 new Number(123) 的结果在 Chrome 中的表现如下： 由于 Symbol 不能通过 new 的方式调用，所以采用了最上面的那种形式。]]></content>
@@ -218,8 +229,8 @@
         <category>学习笔记</category>
       </categories>
       <tags>
-        <tag>Redux</tag>
         <tag>React</tag>
+        <tag>Redux</tag>
       </tags>
   </entry>
   <entry>
