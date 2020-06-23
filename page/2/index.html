@@ -382,6 +382,179 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://kangsunlei.site/2019/04/06/解码URL遇到的问题/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="康大向">
+      <meta itemprop="description" content="点滴学习，随时记录">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="康大向的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/04/06/解码URL遇到的问题/" class="post-title-link" itemprop="url">解码URL遇到的问题</a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-06 18:03:17 / 修改时间：18:05:34" itemprop="dateCreated datePublished" datetime="2019-04-06T18:03:17+08:00">2019-04-06</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>日常开发过程中遇到了一个问题：后端返回的文件下载链接中的文件名，把原文件名的空格转义成了+，而前端解码是不会把+转回空格的。</p>
+<p>原因是两边采用了不同的编码规范。</p>
+<p><a href="https://my.oschina.net/joymufeng/blog/620205" target="_blank" rel="noopener">https://my.oschina.net/joymufeng/blog/620205</a></p>
+<blockquote>
+<p>空格目前有两种不同的编码方式，一种是在HTML4中定义的，而另一种是在RFC-3986中定义的。<br>按照HTML4规范，空格应该被编码成加号”+”，而如果字符本身就是加号”+”，则应该被编码成%2B。</p>
+</blockquote>
+<blockquote>
+<p>RFC-3986中采用统一的编码方式，字符的编码格式为：%HH(H为十六进制字符)， 并没有对空格做特殊处理。按照RFC-3986规范，空格被编码成%20，而加号”+”被编码成%2B。</p>
+</blockquote>
+<p>PS:</p>
+<p><code>encodeURI</code>方法不会对下列字符编码: <code>ASCII字母、数字、~!@\#$&amp;\*()=:/,;?+&#39;</code></p>
+<p><code>encodeURIComponent</code>方法不会对下列字符编码:<code>ASCII字母、数字、~!\*()&#39;</code></p>
+<p>因此，面对后端的这种编码方式，前端处理的话要先将url里面的<code>+</code>替换成<code>%20</code>，再用<code>decodeURIComponent</code>解码</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://kangsunlei.site/2019/04/06/vue-实现流程/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1883,181 +2056,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://kangsunlei.site/2017/05/14/javascript-节流/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="康大向">
-      <meta itemprop="description" content="点滴学习，随时记录">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="康大向的个人博客">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/05/14/javascript-节流/" class="post-title-link" itemprop="url">JavaScript 节流</a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-05-14 22:30:58" itemprop="dateCreated datePublished" datetime="2017-05-14T22:30:58+08:00">2017-05-14</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2017-12-10 20:11:23" itemprop="dateModified" datetime="2017-12-10T20:11:23+08:00">2017-12-10</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/JavaScript/" itemprop="url" rel="index"><span itemprop="name">JavaScript</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>最近在学习慕课网一门课程，里面需要实现一个上拉加载更多的功能，最常见的做法就是监听scroll事件，比较滚动距离和窗口高度。于是代码是这样的：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> top = wrapper.getBoundingClientRect().top</span><br><span class="line">	<span class="keyword">const</span> windowHeight = <span class="built_in">window</span>.screen.height</span><br><span class="line">	<span class="keyword">if</span>(top &amp;&amp; top &lt; windowHeight)&#123;</span><br><span class="line">		loadMoreFn()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>,callback.bind(<span class="keyword">this</span>),<span class="literal">false</span>)</span><br></pre></td></tr></table></figure></p>
-<p>此时有一个问题就是，每次滚动都会调用callback，如果callback处理的比较复杂（常见的是导航栏的隐藏和显示）就会对性能和展示造成影响。</p>
-<p>解决办法就是声明一个定时器，每次出发事件是就清空老的定时器，然后赋值新的定时器，当滚动结束的时候，定时器中的函数就会执行，时间间隔设置比较小，就不会造成明显的延时。<br>代码如下：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> timeoutId</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">const</span> top = wrapper.getBoundingClientRect().top</span><br><span class="line">	<span class="keyword">const</span> windowHeight = <span class="built_in">window</span>.screen.height</span><br><span class="line">	<span class="keyword">if</span>(top &amp;&amp; top &lt; windowHeight)&#123;</span><br><span class="line">		loadMoreFn()</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">window</span>.addEventListener(<span class="string">'scroll'</span>,<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="keyword">if</span>(timeoutId)&#123;</span><br><span class="line">		clearTimeout(timeoutId)</span><br><span class="line">	&#125;</span><br><span class="line">	timeoutId = setTimeout(callback,<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">&#125;.bind(<span class="keyword">this</span>),<span class="literal">false</span>)</span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2106,7 +2104,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">36</span>
+                    <span class="site-state-item-count">37</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
