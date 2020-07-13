@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[滚轮（触摸板）缩放指定区域]]></title>
+    <url>%2F2020%2F07%2F13%2F%E6%BB%9A%E8%BD%AE%EF%BC%88%E8%A7%A6%E6%91%B8%E6%9D%BF%EF%BC%89%E7%BC%A9%E6%94%BE%E6%8C%87%E5%AE%9A%E5%8C%BA%E5%9F%9F%2F</url>
+    <content type="text"><![CDATA[MDN - Element: wheel event; 123456789101112131415function zoom(event) &#123; event.preventDefault(); scale += event.deltaY * -0.01; // Restrict scale scale = Math.min(Math.max(.125, scale), 4); // Apply scale transform el.style.transform = `scale($&#123;scale&#125;)`;&#125;let scale = 1;const el = document.querySelector('div');el.onwheel = zoom; Scale me with your mouse wheel. function zoom(event) { event.preventDefault(); scale += event.deltaY * -0.01; // Restrict scale scale = Math.min(Math.max(.125, scale), 4); // Apply scale transform el.style.transform = `scale(${scale})`; } let scale = 1; const el = document.querySelector('#wheel-el'); el.onwheel = zoom;]]></content>
+      <categories>
+        <category>JavaScript</category>
+      </categories>
+      <tags>
+        <tag>JavaScript</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[图片转base64]]></title>
     <url>%2F2020%2F07%2F08%2F%E5%9B%BE%E7%89%87%E8%BD%ACbase64%2F</url>
     <content type="text"><![CDATA[在 js-实现文档水印效果 中，用了 canvas.toDataURL将水印导出为为base64格式的字符串，用于作为容器背景。 接下来再介绍几种方式： 原文： https://blog.csdn.net/ambit_tsai/article/details/80888899 canvas 此方法只适用于静态图片 如果图片地址跨域，canvas.toDataURL() 会失败 1234567891011121314let img = new Image();// 或者// let img = document.createElement('img');img.onload = function()&#123; let canvas = document.createElement('canvas'), width = img.width, height = img.height; canvas.width = width; canvas.height = height; canvas.getContext('2d').drawImage(img, 0, 0, width, height); console.log(canvas.toDataURL()); // =&gt; "data:image/png;base64,iVBORw0KGgoAAA..."&#125;;img.src = '/path/to/target.png'; FileReader 通过fetch或是ajax发起请求，受跨域问题限制； 该方法可以转换任意文件，不仅仅是图片。 12345678910fetch('/path/to/target.gif') .then(respone =&gt; respone.blob()) // 将响应体转换成blob格式数据 .then(blob =&gt; &#123; let reader = new FileReader(); reader.onloadend = function()&#123; console.log(reader.result); // 输出DataURL数据 &#125;; reader.readAsDataURL(blob); // 将blob数据转换成DataURL数据 &#125;) .catch(console.error); input 标签12345678910&lt;input type="file" onchange="toDataURL(this)" /&gt;&lt;script type="text/javascript"&gt; function toDataURL(el)&#123; let reader = new FileReader(); reader.onloadend = function()&#123; console.log(reader.result); &#125;; reader.readAsDataURL(el.files[0]); // el.files[0]为选中的文件 &#125;&lt;/script&gt;]]></content>
