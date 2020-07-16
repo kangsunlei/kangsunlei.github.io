@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[滚轮（触摸板）缩放指定区域]]></title>
     <url>%2F2020%2F07%2F13%2F%E6%BB%9A%E8%BD%AE%EF%BC%88%E8%A7%A6%E6%91%B8%E6%9D%BF%EF%BC%89%E7%BC%A9%E6%94%BE%E6%8C%87%E5%AE%9A%E5%8C%BA%E5%9F%9F%2F</url>
-    <content type="text"><![CDATA[MDN - Element: wheel event; 123456789101112131415function zoom(event) &#123; event.preventDefault(); scale += event.deltaY * -0.01; // Restrict scale scale = Math.min(Math.max(.125, scale), 4); // Apply scale transform el.style.transform = `scale($&#123;scale&#125;)`;&#125;let scale = 1;const el = document.querySelector('div');el.onwheel = zoom; Scale me with your mouse wheel. function zoom(event) { event.preventDefault(); scale += event.deltaY * -0.01; // Restrict scale scale = Math.min(Math.max(.125, scale), 4); // Apply scale transform el.style.transform = `scale(${scale})`; } let scale = 1; const el = document.querySelector('#wheel-el'); el.onwheel = zoom;]]></content>
+    <content type="text"><![CDATA[MDN - Element: wheel event; 12345678910111213141516171819function zoom(event) &#123; // 缩放的时候 event.ctrlKey 为 true, 否则认为是滚动 if (!event.ctrlKey) &#123; return; &#125; event.preventDefault(); scale += event.deltaY * -0.01; // Restrict scale scale = Math.min(Math.max(.125, scale), 4); // Apply scale transform el.style.transform = `scale($&#123;scale&#125;)`;&#125;let scale = 1;const el = document.querySelector('div');el.onwheel = zoom; Example 通过触摸板双指缩放，或者按住 Ctrl 滚动滚轮 function zoom(event) { if (!event.ctrlKey) { return; } event.preventDefault(); scale += event.deltaY * -0.01; // Restrict scale scale = Math.min(Math.max(.125, scale), 4); // Apply scale transform el.style.transform = `scale(${scale})`; } let scale = 1; const el = document.querySelector('#wheel-el'); el.onwheel = zoom;]]></content>
       <categories>
         <category>JavaScript</category>
       </categories>
@@ -262,8 +262,8 @@
         <category>学习笔记</category>
       </categories>
       <tags>
-        <tag>Redux</tag>
         <tag>React</tag>
+        <tag>Redux</tag>
       </tags>
   </entry>
   <entry>
