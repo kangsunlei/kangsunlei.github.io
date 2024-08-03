@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.3.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/icon.jpg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/icon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/icon.jpg">
+  <link rel="mask-icon" href="/images/icon.jpg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"kangsunlei.site","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="最近在做公司的官网，首页用到了一些循环播放的动画，类似于轮播图。之前一般是直接套用插件，不常手动自己做这种，但是为了避免引入第三方库导致网页过于臃肿，所以就凭着自己掌握的 setTimeout 和  setInterval 的一些简单的知识就开始了制作。 要求：五个 div 依次切换。间隔3s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="setInterval 无限循环动画中存在的问题">
+<meta property="og:url" content="https://kangsunlei.site/2017/06/06/setInterval-%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E5%8A%A8%E7%94%BB%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:site_name" content="敲敲打打">
+<meta property="og:description" content="最近在做公司的官网，首页用到了一些循环播放的动画，类似于轮播图。之前一般是直接套用插件，不常手动自己做这种，但是为了避免引入第三方库导致网页过于臃肿，所以就凭着自己掌握的 setTimeout 和  setInterval 的一些简单的知识就开始了制作。 要求：五个 div 依次切换。间隔3s">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-06-06T09:18:11.000Z">
+<meta property="article:modified_time" content="2024-08-02T12:36:53.835Z">
+<meta property="article:author" content="达向">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="笔记">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://kangsunlei.site/2017/06/06/setInterval-%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E5%8A%A8%E7%94%BB%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>setInterval 无限循环动画中存在的问题 | 敲敲打打</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">敲敲打打</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://kangsunlei.site/2017/06/06/setInterval-%E6%97%A0%E9%99%90%E5%BE%AA%E7%8E%AF%E5%8A%A8%E7%94%BB%E4%B8%AD%E5%AD%98%E5%9C%A8%E7%9A%84%E9%97%AE%E9%A2%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/icon.jpg">
+      <meta itemprop="name" content="达向">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="敲敲打打">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          setInterval 无限循环动画中存在的问题
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-06-06 17:18:11" itemprop="dateCreated datePublished" datetime="2017-06-06T17:18:11+08:00">2017-06-06</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2024-08-02 20:36:53" itemprop="dateModified" datetime="2024-08-02T20:36:53+08:00">2024-08-02</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" itemprop="url" rel="index"><span itemprop="name">学习笔记</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>最近在做公司的官网，首页用到了一些循环播放的动画，类似于轮播图。之前一般是直接套用插件，不常手动自己做这种，但是为了避免引入第三方库导致网页过于臃肿，所以就凭着自己掌握的 setTimeout 和  setInterval 的一些简单的知识就开始了制作。</p>
+<p>要求：五个 div 依次切换。间隔3s</p>
+<span id="more"></span>
+<p>我的第一个想法是：每一个循环作为一个函数，每15s循环一次。<br>于是我的代码是这样的：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $el = $(<span class="string">&#x27;#animat-icon ul&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> $elText = $(<span class="string">&#x27;.animat-text&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> n = $(<span class="string">&#x27;#animat-icon ul li&#x27;</span>).<span class="property">length</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//渐隐切换</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">firstAnimat</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; n; i++) &#123;</span><br><span class="line">        (<span class="keyword">function</span>(<span class="params">i</span>) &#123;</span><br><span class="line">            <span class="built_in">setTimeout</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (i != <span class="number">0</span>) &#123;</span><br><span class="line">                    $el.<span class="title function_">find</span>(<span class="string">&#x27;li&#x27;</span>).<span class="title function_">eq</span>(i - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">                    $elText.<span class="title function_">eq</span>(i - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    $el.<span class="title function_">find</span>(<span class="string">&#x27;li&#x27;</span>).<span class="title function_">eq</span>(n - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">                    $elText.<span class="title function_">eq</span>(n - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                $el.<span class="title function_">find</span>(<span class="string">&#x27;li&#x27;</span>).<span class="title function_">eq</span>(i).<span class="title function_">addClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">                $elText.<span class="title function_">eq</span>(i).<span class="title function_">addClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">            &#125;, <span class="number">3000</span> * i)</span><br><span class="line">        &#125;)(i)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//不等待</span></span><br><span class="line"><span class="title function_">firstAnimat</span>();</span><br><span class="line"><span class="built_in">setInterval</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="title function_">firstAnimat</span>() &#125;, <span class="number">3000</span> * n);</span><br></pre></td></tr></table></figure>
+<p><code>fade</code>用于表现css3的动画，渐隐渐现啥的。<br>写完看了一眼效果实现了，并且我用到了面试的时候被问到的闭包的问题，我还自我感觉很良好。</p>
+<p>然后问题就出现了，当离开当前标签页一段时间之后再回来，所有的文字重叠在了一起，然后依次迅速的执行了<code>fade</code>定义的动画。我的第一想法是浏览器出于性能考虑，停止了我的动画。</p>
+<p>这个原因可能是对的吧，因为没有人说的清楚是怎么回事儿。</p>
+<p>百度之：<br>有人说：</p>
+<blockquote>
+<p>DOM的操作也是消耗时间的，DOM的操作不顺，卡了下，时间就不对了，所以那样不是很稳定。</p>
+</blockquote>
+<p>后面我改成了这样：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> $el = $(<span class="string">&#x27;#animat-icon ul&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> $elText = $(<span class="string">&#x27;.animat-text&#x27;</span>);</span><br><span class="line"><span class="keyword">var</span> n = $(<span class="string">&#x27;#animat-icon ul li&#x27;</span>).<span class="property">length</span>;</span><br><span class="line"><span class="keyword">var</span> index = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> timer;</span><br><span class="line"></span><br><span class="line"><span class="comment">//渐隐切换</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">firstAnimat</span>(<span class="params"></span>) &#123;</span><br><span class="line">    <span class="keyword">if</span> (index != <span class="number">0</span>) &#123;</span><br><span class="line">        $el.<span class="title function_">find</span>(<span class="string">&#x27;li&#x27;</span>).<span class="title function_">eq</span>(index - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">        $elText.<span class="title function_">eq</span>(index - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        $el.<span class="title function_">find</span>(<span class="string">&#x27;li&#x27;</span>).<span class="title function_">eq</span>(n - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">        $elText.<span class="title function_">eq</span>(n - <span class="number">1</span>).<span class="title function_">removeClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    $el.<span class="title function_">find</span>(<span class="string">&#x27;li&#x27;</span>).<span class="title function_">eq</span>(index).<span class="title function_">addClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line">    $elText.<span class="title function_">eq</span>(index).<span class="title function_">addClass</span>(<span class="string">&#x27;fade&#x27;</span>);</span><br><span class="line"></span><br><span class="line">    index += <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">if</span>(index&gt;=n)&#123;</span><br><span class="line">        index = <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="title function_">start</span>();</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">start</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="title function_">firstAnimat</span>();</span><br><span class="line">    timer = <span class="built_in">setInterval</span>(<span class="keyword">function</span>(<span class="params"></span>) &#123; <span class="title function_">firstAnimat</span>() &#125;, <span class="number">3000</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">stop</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="built_in">clearInterval</span>(timer);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;blur&quot;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    <span class="title function_">stop</span>()</span><br><span class="line">&#125;),</span><br><span class="line"><span class="variable language_">window</span>.<span class="title function_">addEventListener</span>(<span class="string">&quot;focus&quot;</span>, <span class="keyword">function</span>(<span class="params">e</span>) &#123;</span><br><span class="line">    <span class="title function_">start</span>()</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>由于表现出来的是在我切换出去后，dom卡了几下，那我直接主动清除定时器不就好了。</p>
+<p>问题暂时解决了，但是看起来还是很不优雅，相信随着我之后的学习，会一点一点完善起来的。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+              <a href="/tags/%E7%AC%94%E8%AE%B0/" rel="tag"># 笔记</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2017/05/14/javascript-%E8%8A%82%E6%B5%81/" rel="prev" title="JavaScript 节流">
+      <i class="fa fa-chevron-left"></i> JavaScript 节流
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/12/10/%E5%86%8D%E4%B8%80%E6%AC%A1%E6%8A%98%E8%85%BEhexo%E5%8D%9A%E5%AE%A2/" rel="next" title="再一次折腾hexo博客">
+      再一次折腾hexo博客 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="达向"
+      src="/images/icon.jpg">
+  <p class="site-author-name" itemprop="name">达向</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kangsunlei" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kangsunlei" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kangsunlei@gmail.com" title="E-Mail → mailto:kangsunlei@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">达向</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
